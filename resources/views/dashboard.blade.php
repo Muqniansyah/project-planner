@@ -1,4 +1,4 @@
-
+    {{-- <x-app-layout> --}}
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,12 +14,27 @@
     </head>
     <header class="bg-white">
         <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-          <div class="flex lg:flex-1">
+            <div class="flex">
+                <!-- Logo -->
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+            </div>
+          {{-- <div class="flex lg:flex-1">
             <a href="#" class="-m-1.5 p-1.5">
-              <span class="sr-only">Your Notification</span>{{-- COMPANY --}}
+              <span class="sr-only">Your Notification</span>
               <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="">
             </a>
-          </div>
+          </div> --}}
           <div class="flex lg:hidden">
             <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
               <span class="sr-only">Open main menu</span>
@@ -144,13 +159,46 @@
               </div>
             </div>
 
-            <a href="#" class="text-sm/6 font-semibold text-gray-900">Resource Managemen</a>{{-- Features --}}
-            <a href="#" class="text-sm/6 font-semibold text-gray-900">Settings</a>{{-- Marketplace --}}
-            <a href="#" class="text-sm/6 font-semibold text-gray-900">Notification</a>{{-- COMPANY --}}
+            <a href="#" class="text-sm/6 font-semibold text-gray-900">Resource Managemen</a>
+            <a href="#" class="text-sm/6 font-semibold text-gray-900">Settings</a>
+            <a href="#" class="text-sm/6 font-semibold text-gray-900">Notification</a>
           </div>
-          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          {{-- <div class="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="#" class="text-sm/6 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
-          </div>
+          </div> --}}
+                      <!-- Settings Dropdown -->
+                      <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    <div>{{ Auth::user()->name }}</div>
+
+                                    <div class="ms-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('profile.edit')">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
+
+                                <!-- Authentication -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <x-dropdown-link :href="route('logout')"
+                                            onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
         </nav>
         <!-- Mobile menu, show/hide based on menu open state. -->
         <div class="lg:hidden" role="dialog" aria-modal="true">
@@ -207,5 +255,7 @@
           </div>
         </div>
       </header>
+    {{-- </x-app-layout>   --}}
+
 
 
