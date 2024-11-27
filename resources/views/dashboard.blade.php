@@ -78,8 +78,8 @@
                       </svg>
                     </div>
                     <div class="flex-auto">
-                      <a href="#" class="block font-semibold text-gray-900">
-                        Analytics
+                      <a href="{{ route('pendjadwalan.index') }}" class="block font-semibold text-gray-900">
+                        Pendjadwalan
                         <span class="absolute inset-0"></span>
                       </a>
                       <p class="mt-1 text-gray-600">Get a better understanding of your traffic</p>
@@ -92,8 +92,8 @@
                       </svg>
                     </div>
                     <div class="flex-auto">
-                      <a href="#" class="block font-semibold text-gray-900">
-                        Engagement
+                      <a href="{{ route('proyek.index') }}" class="block font-semibold text-gray-900">
+                        proyek
                         <span class="absolute inset-0"></span>
                       </a>
                       <p class="mt-1 text-gray-600">Speak directly to your customers</p>

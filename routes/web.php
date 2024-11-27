@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProyekController;
+use App\Http\Controllers\PendjadwalanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,6 +18,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // routing proyek
+    Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek.index');
+
+    // routing pendjadwalan
+    Route::get('/pendjadwalan', [PendjadwalanController::class, 'index'])->name('pendjadwalan.index');
 });
 
 require __DIR__.'/auth.php';
