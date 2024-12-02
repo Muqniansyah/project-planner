@@ -106,8 +106,8 @@
                       </svg>
                     </div>
                     <div class="flex-auto">
-                      <a href="#" class="block font-semibold text-gray-900">
-                        Security
+                      <a href="{{ route('Laporan.index') }}" class="block font-semibold text-gray-900">
+                        Laporan
                         <span class="absolute inset-0"></span>
                       </a>
                       <p class="mt-1 text-gray-600">Your customers’ data will be safe and secure</p>
@@ -159,7 +159,7 @@
               </div>
             </div>
 
-            <a href="#" class="text-sm/6 font-semibold text-gray-900">Resource Managemen</a>
+            <a href="{{ route('ManajemenSD.index') }}" class="text-sm/6 font-semibold text-gray-900">Resource Managemen</a>
             <a href="#" class="text-sm/6 font-semibold text-gray-900">Settings</a>
             <a href="#" class="text-sm/6 font-semibold text-gray-900">Notification</a>
           </div>
