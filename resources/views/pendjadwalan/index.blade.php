@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+        {{-- Memasukkan bagian navigasi utama --}}
+        {{-- @include('navigasiutama') --}}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -74,9 +76,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Untuk Kurva S -->
   </head>
+
   <body>
-    <h1 style="text-align: center">Modul Penjadwalan</h1>
+    <h2 style="text-align: center">Modul Penjadwalan</h2>
     <div class="scheduling-module">
+
       <!-- Pembuatan Jadwal dengan Diagram Gantt -->
       <section class="gantt-chart">
         <h2>Diagram Gantt</h2>

@@ -1,4 +1,8 @@
-<x-app-layout>
+{{-- <x-app-layout> --}}
+
+        {{-- Memasukkan bagian navigasi utama --}}
+        @include('navigasiutama')
+
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Settings') }}
@@ -64,4 +68,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+{{-- </x-app-layout> --}}

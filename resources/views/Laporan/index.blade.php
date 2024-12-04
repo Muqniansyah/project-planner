@@ -96,6 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </head>
 <body>
+        {{-- Memasukkan bagian navigasi utama --}}
+        {{-- @include('navigasiutama') --}}
+
     <h1>Halaman Laporan Proyek</h1>
 
     <!-- Form untuk membuat laporan baru -->

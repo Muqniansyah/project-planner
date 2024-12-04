@@ -1,4 +1,8 @@
-<x-guest-layout>
+{{-- <x-guest-layout> --}}
+
+        {{-- Memasukkan bagian navigasi utama --}}
+        @include('navigasiutama')
+
     <div class="container mx-auto p-6">
         <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Perencanaan Proyek</h1>
 
@@ -56,4 +60,4 @@
     </div>
 
     <script src="{{ asset('js/scripts.js') }}"></script>
-</x-guest-layout>
+{{-- </x-guest-layout> --}}
