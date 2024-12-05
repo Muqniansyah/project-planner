@@ -1,145 +1,100 @@
-<?php
-// Simpan laporan dalam array (simulasi database)
-session_start();
+<x-app-layout>
+    <x-slot name="title">
+        Laporan Proyek
+    </x-slot>
 
-// Inisialisasi laporan jika belum ada
-if (!isset($_SESSION['laporan'])) {
-    $_SESSION['laporan'] = [
-        [
-            'judul' => 'Laporan Proyek A',
-            'penulis' => 'John Doe',
-            'tanggal' => '2024-01-01',
-            'pdf' => 'laporan_a.pdf',
-            'word' => 'laporan_a.docx',
-        ],
-        [
-            'judul' => 'Laporan Proyek B',
-            'penulis' => 'Jane Smith',
-            'tanggal' => '2024-01-15',
-            'pdf' => 'laporan_b.pdf',
-            'word' => 'laporan_b.docx',
-        ],
-    ];
-}
+    <x-slot name="header">
+        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
+            Modul Laporan Proyek
+        </h2>
+    </x-slot>
 
-// Tambahkan laporan baru
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $judul = htmlspecialchars($_POST['judul']);
-    $isi = htmlspecialchars($_POST['isi']);
-    $tanggal = date('Y-m-d');
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Daftar Laporan -->
+            <section class="bg-white shadow-md rounded-lg mb-6">
+                <header class="bg-blue-600 text-white p-4 rounded-t-lg">
+                    <h5 class="text-lg font-semibold">Daftar Laporan</h5>
+                </header>
+                <div class="p-4 overflow-x-auto">
+                    <table class="min-w-full border border-gray-200 rounded-lg">
+                        <thead>
+                            <tr class="bg-blue-100">
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Judul Laporan</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Dibuat Oleh</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Start Date</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">End Date</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Tanggal</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="px-4 py-2 text-gray-700">Laporan Perencanaan A</td>
+                                <td class="px-4 py-2 text-gray-700">Anwar</td>
+                                <td class="px-4 py-2 text-gray-700">2024-11-01</td>
+                                <td class="px-4 py-2 text-gray-700">2024-11-20</td>
+                                <td class="px-4 py-2 text-gray-700">2024-11-20</td>
+                                <td class="px-4 py-2">
+                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh PDF</button>
+                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh Excel</button>
+                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Bagikan</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2 text-gray-700">Laporan Progress B</td>
+                                <td class="px-4 py-2 text-gray-700">Budi</td>
+                                <td class="px-4 py-2 text-gray-700">2024-10-01</td>
+                                <td class="px-4 py-2 text-gray-700">2024-11-15</td>
+                                <td class="px-4 py-2 text-gray-700">2024-11-15</td>
+                                <td class="px-4 py-2">
+                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh PDF</button>
+                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh Excel</button>
+                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Bagikan</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-    // Simpan laporan baru ke dalam array
-    $_SESSION['laporan'][] = [
-        'judul' => $judul,
-        'penulis' => 'Admin', // Bisa disesuaikan
-        'tanggal' => $tanggal,
-        'pdf' => '', // Untuk saat ini tidak menghasilkan file
-        'word' => '',
-    ];
-}
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Laporan Proyek</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        form {
-            margin-top: 20px;
-        }
-        form div {
-            margin-bottom: 10px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-        }
-        input, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-        }
-        button {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-
-</head>
-<body>
-    <h1>Halaman Laporan Proyek</h1>
-
-    <!-- Form untuk membuat laporan baru -->
-    <h2>Buat Laporan Baru</h2>
-    <form method="POST" action="">
-        <div>
-            <label for="judul">Judul Laporan</label>
-            <input type="text" id="judul" name="judul" required>
+            <!-- Form Laporan Baru -->
+            <section class="bg-white shadow-md rounded-lg">
+                <header class="bg-blue-600 text-white p-4 rounded-t-lg">
+                    <h5 class="text-lg font-semibold">Buat Laporan Baru</h5>
+                </header>
+                <div class="p-4">
+                    <form>
+                        @csrf
+                        <div class="mb-4">
+                            <label for="report-title" class="block mb-2 text-sm font-medium text-gray-700">Judul Laporan</label>
+                            <input type="text" id="report-title"
+                                class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Masukkan judul laporan" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="report-content" class="block mb-2 text-sm font-medium text-gray-700">Isi Laporan</label>
+                            <textarea id="report-content" rows="6"
+                                class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Masukkan isi laporan" required></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label for="start-date" class="block mb-2 text-sm font-medium text-gray-700">Start Date</label>
+                            <input type="date" id="start-date"
+                                class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="end-date" class="block mb-2 text-sm font-medium text-gray-700">End Date</label>
+                            <input type="date" id="end-date"
+                                class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                        </div>
+                        <button type="submit"
+                            class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Buat Laporan</button>
+                    </form>
+                </div>
+            </section>
         </div>
-        <div>
-            <label for="isi">Isi Laporan</label>
-            <textarea id="isi" name="isi" rows="5" required></textarea>
-        </div>
-        <button type="submit">Tambah Laporan</button>
-    </form>
-
-    <!-- Daftar laporan -->
-    <h2>Daftar Laporan</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Judul Laporan</th>
-                <th>Nama Penulis</th>
-                <th>Tanggal</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($_SESSION['laporan'] as $data): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($data['judul']); ?></td>
-                    <td><?php echo htmlspecialchars($data['penulis']); ?></td>
-                    <td><?php echo htmlspecialchars($data['tanggal']); ?></td>
-                    <td>
-                        <?php if ($data['pdf']): ?>
-                            <a href="downloads/<?php echo htmlspecialchars($data['pdf']); ?>" target="_blank">Unduh PDF</a> |
-                        <?php endif; ?>
-                        <?php if ($data['word']): ?>
-                            <a href="downloads/<?php echo htmlspecialchars($data['word']); ?>" target="_blank">Unduh Word</a>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</body>
-</html>
+    </div>
+</x-app-layout>

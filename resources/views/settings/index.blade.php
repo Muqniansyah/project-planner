@@ -15,51 +15,76 @@
                     </h2>
                     <hr class="h-1 my-4 bg-blue-500">
 
-
+                    <!-- Form -->
                     <form class="max-w-sm">
+                        <!-- Pilihan Nama Pengguna -->
                         <div class="mb-5">
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Nama
-                                Pengguna</label>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama Pengguna</label>
                             <select id="name" name="name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="akun1">Akun 1</option>
                                 <option value="akun2">Akun 2</option>
                             </select>
                         </div>
+
+                        <!-- Hak Akses -->
                         <div class="mb-5">
-                            <p class="block mb-2 text-xl font-bold text-gray-900">Hak
-                                Akses</p>
+                            <p class="block mb-2 text-xl font-bold text-gray-900">Hak Akses</p>
 
                             <div class="flex items-center mb-4">
-                                <input checked id="read" type="checkbox" value="" name="hakAkses"
+                                <input checked id="read" type="checkbox" value="read" name="hakAkses[]"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                 <label for="read" class="text-sm font-medium text-gray-900 ms-2">Read</label>
                             </div>
 
                             <div class="flex items-center mb-4">
-                                <input checked id="create" type="checkbox" value="" name="hakAkses"
+                                <input checked id="create" type="checkbox" value="create" name="hakAkses[]"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                 <label for="create" class="text-sm font-medium text-gray-900 ms-2">Create</label>
                             </div>
 
                             <div class="flex items-center mb-4">
-                                <input checked id="update" type="checkbox" value="" name="hakAkses"
+                                <input checked id="update" type="checkbox" value="update" name="hakAkses[]"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                 <label for="update" class="text-sm font-medium text-gray-900 ms-2">Update</label>
                             </div>
 
                             <div class="flex items-center mb-4">
-                                <input checked id="delete" type="checkbox" value="" name="hakAkses"
+                                <input checked id="delete" type="checkbox" value="delete" name="hakAkses[]"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                                 <label for="delete" class="text-sm font-medium text-gray-900 ms-2">Delete</label>
                             </div>
-
                         </div>
+
+                        <!-- Notifikasi -->
+                        <div class="mb-5">
+                            <p class="block mb-2 text-xl font-bold text-gray-900">Notifikasi</p>
+
+                            <div class="flex items-center mb-4">
+                                <input id="daily" type="checkbox" value="daily" name="notifikasi[]"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="daily" class="text-sm font-medium text-gray-900 ms-2">Harian</label>
+                            </div>
+
+                            <div class="flex items-center mb-4">
+                                <input id="weekly" type="checkbox" value="weekly" name="notifikasi[]"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="weekly" class="text-sm font-medium text-gray-900 ms-2">Mingguan</label>
+                            </div>
+
+                            <div class="flex items-center mb-4">
+                                <input id="monthly" type="checkbox" value="monthly" name="notifikasi[]"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                <label for="monthly" class="text-sm font-medium text-gray-900 ms-2">Bulanan</label>
+                            </div>
+                        </div>
+
+                        <!-- Tombol Submit -->
                         <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5">Submit</button>
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5">
+                            Submit
+                        </button>
                     </form>
-
-
                 </div>
             </div>
         </div>

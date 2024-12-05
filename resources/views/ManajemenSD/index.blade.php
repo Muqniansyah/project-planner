@@ -1,140 +1,110 @@
-    <!-- Slot untuk title halaman-->
-    <x-slot name="title ">
+<x-app-layout>
+    <!-- Slot untuk title halaman -->
+    <x-slot name="title">
         Manajemen Sumber Daya
     </x-slot>
 
-    {{-- Judul Halaman --}}
-    <div class="Judul p-4 border bg-[#387ADF] rounded font-[PoltawskiNowy] text-white ">
-        <h1 class="text-center"> Manajemen Sumber Daya</h1>
-    </div>
- 
-    <!-- Slot untuk header halaman -->
-        {{-- Google Font --}}
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poltawski+Nowy:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">        <!-- Bootstrap CSS CDN -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Tailwind CSS CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
-
-        <!-- Slot title dari aplikasi -->
-        <x-slot name="title">
-            Manajemen Sumber Daya
-        </x-slot>
-
+    <!-- Header halaman -->
     <x-slot name="header">
-
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
             Modul Manajemen Sumber Daya
         </h2>
     </x-slot>
 
     <!-- Bagian konten utama halaman -->
     <div class="py-12">
-        <!-- Kontainer utama untuk menyusun konten secara responsif -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            <!-- Summary Stats: Menampilkan ringkasan data sumber daya -->
-            {{-- <div class="row mb-4"> --}}
-                <!-- Kartu untuk menampilkan total tenaga kerja -->
-                {{-- <div class="col-md-4">
-                    <div class="card text-center p-3">
-                        <h5>Total Tenaga Kerja</h5>
-                        <h3>35 Orang</h3>
-                    </div>
-                </div> --}}
-
-                <!-- Kartu untuk menampilkan total material -->
-                {{-- <div class="col-md-4">
-                    <div class="card text-center p-3">
-                        <h5>Total Material</h5>
-                        <h3>120 Unit</h3>
-                    </div>
-                </div> --}}
-
-                <!-- Kartu untuk menampilkan persentase sumber daya yang tersedia -->
-                {{-- <div class="col-md-4">
-                    <div class="card text-center p-3">
-                        <h5>Sumber Daya Tersedia</h5>
-                        <h3>80%</h3>
-                    </div>
-                </div>
-            </div> --}}
-
-            <!-- Resource Table: Tabel untuk menampilkan data sumber daya yang tersedia -->
-            <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5>Pemantauan Ketersediaan Sumber Daya</h5>
-                </div>
-                <div class="card-body">
-                    <!-- Tabel untuk menampilkan daftar sumber daya -->
-                    <table class="table table-bordered table-striped">
-                        <thead class="table-primary">
-                            <tr>
-                                <th>Nama Sumber Daya</th> <!-- Nama sumber daya -->
-                                <th>Jenis</th> <!-- Jenis sumber daya -->
-                                <th>Kuantitas</th> <!-- Kuantitas sumber daya -->
-                                <th>Aksi</th> <!-- Status ketersediaan -->
+            <!-- Resource Table -->
+            <section class="bg-white shadow-md rounded-lg mb-6">
+                <header class="bg-blue-600 text-white p-4 rounded-t-lg">
+                    <h5 class="text-lg font-semibold">Pemantauan Ketersediaan Sumber Daya</h5>
+                </header>
+                <div class="p-4">
+                    <table class="min-w-full table-auto border border-gray-200 rounded-lg">
+                        <thead>
+                            <tr class="bg-blue-100">
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Nama Sumber Daya</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Jenis</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Kuantitas</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Baris data sumber daya yang pertama -->
-                            <tr>
-                                <td>Tenaga Kerja A</td> <!-- Nama sumber daya -->
-                                <td>Tenaga Kerja</td> <!-- Jenis sumber daya -->
-                                <td>10 Orang</td> <!-- Kuantitas -->
-                                <td><span class="badge bg-warning">Edit</span></td> <!-- Status -->
+                            <tr class="border-b">
+                                <td class="px-4 py-2 text-gray-700">Tenaga Kerja A</td>
+                                <td class="px-4 py-2 text-gray-700">Tenaga Kerja</td>
+                                <td class="px-4 py-2 text-gray-700">10 Orang</td>
+                                <td class="px-4 py-2">
+                                    <button class="px-2 py-1 text-white bg-yellow-500 rounded hover:bg-yellow-600">
+                                        Edit
+                                    </button>
+                                </td>
                             </tr>
-
-                            <!-- Baris data sumber daya yang kedua -->
                             <tr>
-                                <td>Material B</td> <!-- Nama sumber daya -->
-                                <td>Material</td> <!-- Jenis sumber daya -->
-                                <td>50 Unit</td> <!-- Kuantitas -->
-                                <td><span class="badge bg-warning">Edit</span></td> <!-- Status -->
+                                <td class="px-4 py-2 text-gray-700">Material B</td>
+                                <td class="px-4 py-2 text-gray-700">Material</td>
+                                <td class="px-4 py-2 text-gray-700">50 Unit</td>
+                                <td class="px-4 py-2">
+                                    <button class="px-2 py-1 text-white bg-yellow-500 rounded hover:bg-yellow-600">
+                                        Edit
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </section>
 
-            <!-- Allocation Form: Formulir untuk alokasi sumber daya baru -->
-            <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5>Alokasi Sumber Daya</h5>
-                </div>
-                <div class="card-body">
-                    <!-- Formulir alokasi -->
-                    <form action="#" method="POST">
-                        @csrf <!-- Cross-Site Request Forgery protection token -->
-
-                        <!-- Input untuk nama sumber daya -->
-                        <div class="mb-3">
-                            <label for="resourceName" class="form-label">Nama Sumber Daya:</label>
-                            <input type="text" class="form-control" id="resourceName" name="resource_name" required>
+            <!-- Allocation Form -->
+            <section class="bg-white shadow-md rounded-lg">
+                <header class="bg-blue-600 text-white p-4 rounded-t-lg">
+                    <h5 class="text-lg font-semibold">Alokasi Sumber Daya</h5>
+                </header>
+                <div class="p-4">
+                    <form>
+                        @csrf
+                        <!-- Nama Sumber Daya -->
+                        <div class="mb-4">
+                            <label for="resourceName" class="block mb-2 text-sm font-medium text-gray-700">
+                                Nama Sumber Daya:
+                            </label>
+                            <input type="text" id="resourceName" name="resource_name"
+                                class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                required>
                         </div>
 
-                        <!-- Input untuk memilih jenis sumber daya -->
-                        <div class="mb-3">
-                            <label for="resourceType" class="form-label">Jenis:</label>
-                            <select class="form-select" id="resourceType" name="resource_type" required>
-                                <option value="">Pilih Jenis</option> <!-- Pilihan kosong untuk user memilih -->
-                                <option value="Tenaga Kerja">Tenaga Kerja</option> <!-- Pilihan Tenaga Kerja -->
-                                <option value="Material">Material</option> <!-- Pilihan Material -->
+                        <!-- Jenis -->
+                        <div class="mb-4">
+                            <label for="resourceType" class="block mb-2 text-sm font-medium text-gray-700">
+                                Jenis:
+                            </label>
+                            <select id="resourceType" name="resource_type"
+                                class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                required>
+                                <option value="">Pilih Jenis</option>
+                                <option value="Tenaga Kerja">Tenaga Kerja</option>
+                                <option value="Material">Material</option>
                             </select>
                         </div>
 
-                        <!-- Input untuk kuantitas sumber daya -->
-                        <div class="mb-3">
-                            <label for="quantity" class="form-label">Kuantitas:</label>
-                            <input type="number" class="form-control" id="quantity" name="quantity" required>
+                        <!-- Kuantitas -->
+                        <div class="mb-4">
+                            <label for="quantity" class="block mb-2 text-sm font-medium text-gray-700">
+                                Kuantitas:
+                            </label>
+                            <input type="number" id="quantity" name="quantity"
+                                class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                required>
                         </div>
 
-                        <!-- Tombol untuk mengirimkan formulir -->
-                        <button type="submit" class="btn btn-primary">Alokasikan</button>
+                        <!-- Tombol -->
+                        <button type="submit"
+                            class="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                            Alokasikan
+                        </button>
                     </form>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
+</x-app-layout>

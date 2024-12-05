@@ -1,59 +1,108 @@
-<x-guest-layout>
-    <div class="container mx-auto p-6">
-        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Perencanaan Proyek</h1>
+<x-app-layout>
+    <x-slot name="title">
+        Perencanaan Proyek
+    </x-slot>
 
-        <form id="project-form" class="space-y-6 bg-white p-6 rounded-lg shadow-lg">
-            <div class="form-group">
-                <label for="title" class="block text-lg font-medium text-gray-700">Judul Proyek</label>
-                <input type="text" id="title" placeholder="Masukkan judul proyek" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
+    <x-slot name="header">
+        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
+            Modul Perencanaan Proyek
+        </h2>
+    </x-slot>
 
-            <div class="form-group">
-                <label for="description" class="block text-lg font-medium text-gray-700">Deskripsi</label>
-                <textarea id="description" placeholder="Masukkan deskripsi proyek" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-            </div>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Form Membuat Proyek Baru -->
+            <section class="bg-white shadow-md rounded-lg mb-6">
+                <header class="bg-blue-600 text-white p-4 rounded-t-lg">
+                    <h5 class="text-lg font-semibold">Buat Proyek Baru</h5>
+                </header>
+                <div class="p-4">
+                    <form>
+                        <label for="project-title" class="block mb-2 text-sm font-medium text-gray-700">Judul Proyek</label>
+                        <input type="text" id="project-title"
+                            class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Masukkan judul proyek" required>
 
-            <div class="form-group">
-                <label for="budget" class="block text-lg font-medium text-gray-700">Anggaran</label>
-                <input type="number" id="budget" placeholder="Masukkan anggaran" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
+                        <label for="project-desc" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Deskripsi</label>
+                        <textarea id="project-desc" rows="6"
+                            class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Masukkan deskripsi proyek" required></textarea>
 
-            <div class="form-group">
-                <label for="resource" class="block text-lg font-medium text-gray-700">Pilih Sumber Daya</label>
-                <select id="resource" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Pilih Sumber Daya</option>
-                    <option value="Resource 1">Resource 1</option>
-                    <option value="Resource 2">Resource 2</option>
-                    <option value="Resource 3">Resource 3</option>
-                </select>
-            </div>
+                        <label for="project-budget" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Anggaran</label>
+                        <input type="number" id="project-budget"
+                            class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Masukkan anggaran" required>
 
-            <div class="form-group">
-                <label for="start-date" class="block text-lg font-medium text-gray-700">Tanggal Mulai</label>
-                <input type="date" id="start-date" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
+                        <label for="project-resource" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Sumber Daya</label>
+                        <input type="text" id="project-resource"
+                            class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Masukkan sumber daya (contoh: Tenaga Kerja, Material, Peralatan)" required>
 
-            <div class="form-group">
-                <label for="end-date" class="block text-lg font-medium text-gray-700">Tanggal Selesai</label>
-                <input type="date" id="end-date" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
+                        <label for="resource-quantity" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Kuantitas Sumber Daya</label>
+                        <input type="number" id="resource-quantity"
+                            class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Masukkan jumlah" required>
 
-            <div class="form-group">
-                <label for="status" class="block text-lg font-medium text-gray-700">Status</label>
-                <input type="text" id="status" placeholder="Masukkan status proyek" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
+                        <!-- Project Detail Section -->
+                        <section class="mt-6">
+                            <p class="font-semibold text-gray-700">Detail Proyek</p>
+                            <button class="toggle-detail-btn w-full px-4 py-2 mt-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                                type="button">Lihat Detail Proyek</button>
 
-            <div class="form-group">
-                <label for="created-by" class="block text-lg font-medium text-gray-700">Dibuat Oleh</label>
-                <input type="text" id="created-by" placeholder="Masukkan nama pembuat" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
+                            <div class="project-detail-card hidden mt-4">
+                                <label for="start-date" class="block mb-2 text-sm font-medium text-gray-700">Tanggal Mulai</label>
+                                <input type="date" id="start-date"
+                                    class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                    required>
 
-            <button type="button" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" onclick="addProject()">Buat Proyek</button>
-        </form>
+                                <label for="end-date" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Tanggal Selesai</label>
+                                <input type="date" id="end-date"
+                                    class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                    required>
 
-        <h2 class="text-3xl font-semibold mt-10 text-gray-800">Daftar Proyek</h2>
-        <div id="project-list" class="project-list mt-4 space-y-4"></div>
+                                <label for="new-task" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Tugas Baru</label>
+                                <textarea id="new-task" rows="4"
+                                    class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Masukkan tugas baru" required></textarea>
+
+                                <button type="submit"
+                                    class="w-full mt-4 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Simpan Detail</button>
+                            </div>
+                        </section>
+
+                        <label for="project-status" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Status</label>
+                        <select id="project-status"
+                            class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500">
+                            <option value="planned">Planned</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                        </select>
+
+                        <label for="project-creator" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Dibuat Oleh</label>
+                        <input type="text" id="project-creator"
+                            class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Masukkan nama pembuat" required>
+
+                        <button type="submit"
+                            class="w-full mt-4 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Buat Proyek</button>
+                    </form>
+                </div>
+            </section>
+        </div>
     </div>
 
-    <script src="{{ asset('js/scripts.js') }}"></script>
-</x-guest-layout>
+    <script>
+        // Toggle Visibility of Project Detail Card
+        document
+            .querySelector(".toggle-detail-btn")
+            .addEventListener("click", function () {
+                const detailCard = document.querySelector(".project-detail-card");
+                detailCard.classList.toggle("hidden");
+
+                // Update button text based on visibility
+                this.textContent = detailCard.classList.contains("hidden")
+                    ? "Lihat Detail Proyek"
+                    : "Tutup Detail Proyek";
+            });
+    </script>
+</x-app-layout>

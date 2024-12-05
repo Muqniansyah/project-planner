@@ -90,20 +90,6 @@
                   <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
                     <div class="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                       <svg class="size-6 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
-                      </svg>
-                    </div>
-                    <div class="flex-auto">
-                      <a href="{{ route('proyek.index') }}" class="block font-semibold text-gray-900">
-                        proyek
-                        <span class="absolute inset-0"></span>
-                      </a>
-                      <p class="mt-1 text-gray-600">Speak directly to your customers</p>
-                    </div>
-                  </div>
-                  <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
-                    <div class="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                      <svg class="size-6 text-gray-600 group-hover:text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
                       </svg>
                     </div>
@@ -119,6 +105,7 @@
               </div>
             </div>
 
+            <a href="{{ route('proyek.index') }}" class="text-sm/6 font-semibold text-gray-900">proyek</a>
             <a href="{{ route('ManajemenSD.index') }}" class="text-sm/6 font-semibold text-gray-900">Resource Managemen</a>
             <a href="{{ route('settings.index') }}" class="text-sm/6 font-semibold text-gray-900">Settings</a>
           </div>
@@ -220,67 +207,146 @@
 
         <!-- Main Content -->
         <main class="py-6">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Pending Section -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-700 mb-4">Pending</h2>
-                <div class="space-y-4">
-                    <!-- Card 1 -->
-                    <div class="bg-yellow-100 shadow rounded-lg p-4">
-                        <h3 class="text-md font-semibold text-yellow-700">Task A</h3>
-                        <p class="text-sm text-yellow-600 mt-2">Awaiting review before assignment.</p>
-                        <p class="mt-2 text-xs text-yellow-500">Due: Dec 5, 2024</p>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Pending Section -->
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700 mb-4">Pending</h2>
+                        <div class="space-y-4">
+                            <!-- Card 1 -->
+                            <div class="bg-yellow-100 shadow rounded-lg p-4">
+                                <h3 class="text-md font-semibold text-yellow-700">Project A</h3>
+                                <p class="text-sm text-yellow-600 mt-2">Deskripsi: Awaiting review before assignment.</p>
+                                <p class="text-sm text-yellow-600 mt-2">Anggaran: $10,000</p>
+                                <p class="text-sm text-yellow-600 mt-2">Sumber Daya Material: Material A</p>
+                                <p class="text-sm text-yellow-600 mt-2">Kuantitas: 50 units</p>
+                                <p class="mt-2 text-xs text-yellow-500">Status: Pending review</p>
+                                <p class="mt-2 text-xs text-yellow-500">Dibuat Oleh: John Doe</p>
+                                <p class="mt-2 text-xs text-yellow-500">Due: Dec 5, 2024</p>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300">Back</button>
+                                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Next</button>
+                                </div>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Lihat Detail</button>
+                                    <button class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600">Edit</button>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="bg-yellow-100 shadow rounded-lg p-4">
+                                <h3 class="text-md font-semibold text-yellow-700">Project B</h3>
+                                <p class="text-sm text-yellow-600 mt-2">Deskripsi: Pending approval from the manager.</p>
+                                <p class="text-sm text-yellow-600 mt-2">Anggaran: $8,500</p>
+                                <p class="text-sm text-yellow-600 mt-2">Sumber Daya Material: Material B</p>
+                                <p class="text-sm text-yellow-600 mt-2">Kuantitas: 30 units</p>
+                                <p class="mt-2 text-xs text-yellow-500">Status: Pending approval</p>
+                                <p class="mt-2 text-xs text-yellow-500">Dibuat Oleh: Jane Smith</p>
+                                <p class="mt-2 text-xs text-yellow-500">Due: Dec 6, 2024</p>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300">Back</button>
+                                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Next</button>
+                                </div>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Lihat Detail</button>
+                                    <button class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600">Edit</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Card 2 -->
-                    <div class="bg-yellow-100 shadow rounded-lg p-4">
-                        <h3 class="text-md font-semibold text-yellow-700">Task B</h3>
-                        <p class="text-sm text-yellow-600 mt-2">Pending approval from the manager.</p>
-                        <p class="mt-2 text-xs text-yellow-500">Due: Dec 6, 2024</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- In Progress Section -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-700 mb-4">In Progress</h2>
-                <div class="space-y-4">
-                    <!-- Card 1 -->
-                    <div class="bg-blue-100 shadow rounded-lg p-4">
-                        <h3 class="text-md font-semibold text-blue-700">Task C</h3>
-                        <p class="text-sm text-blue-600 mt-2">Work is ongoing. Expected completion by next week.</p>
-                        <p class="mt-2 text-xs text-blue-500">Started: Dec 1, 2024</p>
+                    <!-- In Progress Section -->
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700 mb-4">In Progress</h2>
+                        <div class="space-y-4">
+                            <!-- Card 1 -->
+                            <div class="bg-blue-100 shadow rounded-lg p-4">
+                                <h3 class="text-md font-semibold text-blue-700">Project C</h3>
+                                <p class="text-sm text-blue-600 mt-2">Deskripsi: Work is ongoing. Expected completion by next week.</p>
+                                <p class="text-sm text-blue-600 mt-2">Anggaran: $15,000</p>
+                                <p class="text-sm text-blue-600 mt-2">Sumber Daya Material: Material C</p>
+                                <p class="text-sm text-blue-600 mt-2">Kuantitas: 70 units</p>
+                                <p class="mt-2 text-xs text-blue-500">Status: In Progress</p>
+                                <p class="mt-2 text-xs text-blue-500">Dibuat Oleh: Michael Lee</p>
+                                <p class="mt-2 text-xs text-blue-500">Started: Dec 1, 2024</p>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300">Back</button>
+                                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Next</button>
+                                </div>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Lihat Detail</button>
+                                    <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Edit</button>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="bg-blue-100 shadow rounded-lg p-4">
+                                <h3 class="text-md font-semibold text-blue-700">Project D</h3>
+                                <p class="text-sm text-blue-600 mt-2">Deskripsi: Under review by QA team.</p>
+                                <p class="text-sm text-blue-600 mt-2">Anggaran: $12,000</p>
+                                <p class="text-sm text-blue-600 mt-2">Sumber Daya Material: Material D</p>
+                                <p class="text-sm text-blue-600 mt-2">Kuantitas: 40 units</p>
+                                <p class="mt-2 text-xs text-blue-500">Status: Under review</p>
+                                <p class="mt-2 text-xs text-blue-500">Dibuat Oleh: Alice Cooper</p>
+                                <p class="mt-2 text-xs text-blue-500">Started: Nov 30, 2024</p>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300">Back</button>
+                                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Next</button>
+                                </div>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Lihat Detail</button>
+                                    <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Edit</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Card 2 -->
-                    <div class="bg-blue-100 shadow rounded-lg p-4">
-                        <h3 class="text-md font-semibold text-blue-700">Task D</h3>
-                        <p class="text-sm text-blue-600 mt-2">Under review by QA team.</p>
-                        <p class="mt-2 text-xs text-blue-500">Started: Nov 30, 2024</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Completed Section -->
-            <div>
-                <h2 class="text-lg font-semibold text-gray-700 mb-4">Completed</h2>
-                <div class="space-y-4">
-                    <!-- Card 1 -->
-                    <div class="bg-green-100 shadow rounded-lg p-4">
-                        <h3 class="text-md font-semibold text-green-700">Task E</h3>
-                        <p class="text-sm text-green-600 mt-2">Successfully completed and delivered.</p>
-                        <p class="mt-2 text-xs text-green-500">Completed: Nov 25, 2024</p>
-                    </div>
-                    <!-- Card 2 -->
-                    <div class="bg-green-100 shadow rounded-lg p-4">
-                        <h3 class="text-md font-semibold text-green-700">Task F</h3>
-                        <p class="text-sm text-green-600 mt-2">Final review passed and archived.</p>
-                        <p class="mt-2 text-xs text-green-500">Completed: Nov 20, 2024</p>
+                    <!-- Completed Section -->
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-700 mb-4">Completed</h2>
+                        <div class="space-y-4">
+                            <!-- Card 1 -->
+                            <div class="bg-green-100 shadow rounded-lg p-4">
+                                <h3 class="text-md font-semibold text-green-700">Project E</h3>
+                                <p class="text-sm text-green-600 mt-2">Deskripsi: Successfully completed and delivered.</p>
+                                <p class="text-sm text-green-600 mt-2">Anggaran: $20,000</p>
+                                <p class="text-sm text-green-600 mt-2">Sumber Daya Material: Material E</p>
+                                <p class="text-sm text-green-600 mt-2">Kuantitas: 100 units</p>
+                                <p class="mt-2 text-xs text-green-500">Status: Completed</p>
+                                <p class="mt-2 text-xs text-green-500">Dibuat Oleh: Sarah Green</p>
+                                <p class="mt-2 text-xs text-green-500">Completed: Nov 25, 2024</p>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300">Back</button>
+                                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Next</button>
+                                </div>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Lihat Detail</button>
+                                    <button class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">Edit</button>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="bg-green-100 shadow rounded-lg p-4">
+                                <h3 class="text-md font-semibold text-green-700">Project F</h3>
+                                <p class="text-sm text-green-600 mt-2">Deskripsi: Final review passed and archived.</p>
+                                <p class="text-sm text-green-600 mt-2">Anggaran: $18,000</p>
+                                <p class="text-sm text-green-600 mt-2">Sumber Daya Material: Material F</p>
+                                <p class="text-sm text-green-600 mt-2">Kuantitas: 60 units</p>
+                                <p class="mt-2 text-xs text-green-500">Status: Completed</p>
+                                <p class="mt-2 text-xs text-green-500">Dibuat Oleh: Kevin Taylor</p>
+                                <p class="mt-2 text-xs text-green-500">Completed: Nov 20, 2024</p>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300">Back</button>
+                                    <button class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Next</button>
+                                </div>
+                                <div class="mt-4 flex justify-between">
+                                    <button class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Lihat Detail</button>
+                                    <button class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">Edit</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</main>
+        </main>
+
 
     {{-- </x-app-layout>   --}}
 
