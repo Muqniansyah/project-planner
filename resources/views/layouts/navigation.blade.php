@@ -98,3 +98,13 @@
         </div>
     </div>
 </nav>
+
+<script>
+    // Toggle Visibility of Project Detail Card
+    document.querySelector(".toggle-detail-btn").addEventListener("click", function () {
+        const detailCard = document.querySelector(".project-detail-card");
+        detailCard.classList.toggle("hidden");
+
+        // Update button text based on visibility
+        this.textContent = detailCard.classList.contains("hidden") ? "Lihat Detail Proyek" : "Tutup Detail Proyek";});
+</script>

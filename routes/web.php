@@ -12,9 +12,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ProyekController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,6 +26,8 @@ Route::middleware('auth')->group(function () {
 
     // routing proyek
     Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek.index');
+    Route::post('/proyek/store', [ProyekController::class, 'store'])->name('proyek.store');
+    Route::patch('/proyek/{id}/status', [ProyekController::class, 'updateStatus'])->name('proyek.updateStatus');
 
     // routing pendjadwalan
     Route::get('/pendjadwalan', [PendjadwalanController::class,'index'])->name('pendjadwalan.index');
