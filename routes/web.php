@@ -6,6 +6,7 @@ use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\PendjadwalanController;
 use App\Http\Controllers\ManajemenSDController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ProjectDetailController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek.index');
     Route::post('/proyek/store', [ProyekController::class, 'store'])->name('proyek.store');
     Route::patch('/proyek/{id}/status', [ProyekController::class, 'updateStatus'])->name('proyek.updateStatus');
+    Route::get('/proyek/{project}', [ProjectDetailController::class, 'index'])->name('proyekdetail.index');
 
     // routing pendjadwalan
     Route::get('/pendjadwalan', [PendjadwalanController::class,'index'])->name('pendjadwalan.index');

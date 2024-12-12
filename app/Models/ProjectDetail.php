@@ -9,10 +9,13 @@ class ProjectDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['project_id', 'task_fitur', 'start_date', 'end_date'];
+    protected $appends = ["open"];
 
-    public function project()
+    public function getOpenAttribute()
     {
-        return $this->belongsTo(Project::class);
+        return true;
     }
+
+    protected $table = 'project_details';
+    protected $fillable = ['text', 'duration', 'start_date', 'end_date', 'progress', 'parent', 'project_id'];
 }

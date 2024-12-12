@@ -48,6 +48,11 @@ class ProyekController extends Controller
         return response()->json(['message' => 'Status proyek berhasil diperbarui!']);
     }
 
+    public function detail($id) {
+        $project = Project::findOrFail($id);
+        return view('proyek.detail', compact('project'));
+    }
+
 
     
 }

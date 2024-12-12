@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('project_details', function (Blueprint $table) {
             $table->id();
+            $table->string('text');
+            $table->integer('duration');
+            $table->float('progress');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date')->nullable();
+            $table->integer('parent');
             $table->unsignedBigInteger('project_id');
-            $table->string('task_fitur', 255);
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
