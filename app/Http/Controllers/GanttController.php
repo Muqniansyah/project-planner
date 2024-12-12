@@ -16,7 +16,7 @@ class GanttController extends Controller
         $links = new Link();
 
         return response()->json([
-            'tasks' => $tasks->all()->where('project_id', $project->id),
+            'tasks' => $tasks->where('project_id', $project->id)->get(),
             'links' => $links->all(),
         ]);
     }

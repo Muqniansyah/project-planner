@@ -36,10 +36,16 @@
                                     href="{{ route('proyekdetail.index', $project->id) }}" class="flex items-center px-4 py-2 font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600 me-2">
                                     Detail <i class="bi bi-arrow-right ms-2"></i>
                                 </a>
-                                <button
+                                <form action="{{ route('proyek.updateStatus', $project->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    
+                                    <button type="submit"
                                     class="flex items-center px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
                                     Next <i class="bi bi-arrow-right ms-2"></i>
                                 </button>
+                                </form>
+                                
                             </div>
                         </div>
                     @empty
@@ -61,6 +67,17 @@
                             <p class="mt-2 text-sm text-blue-600">Anggaran: ${{ number_format($project->anggaran, 2) }}
                             </p>
                             <p class="mt-2 text-xs text-blue-500">Status: {{ $project->status }}</p>
+
+                            <div class="flex justify-end mt-4">
+                                <a
+                                    href="{{ route('proyekdetail.index', $project->id) }}" class="flex items-center px-4 py-2 font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600 me-2">
+                                    Detail <i class="bi bi-arrow-right ms-2"></i>
+                                </a>
+                                <a href="{{ route('proyek.updateStatus', $project->id) }}"
+                                    class="flex items-center px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                                    Next <i class="bi bi-arrow-right ms-2"></i>
+                                </a>
+                            </div>
                         </div>
                     @empty
                         <p class="text-gray-500">Tidak ada proyek dengan status In Progress.</p>

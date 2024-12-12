@@ -31,8 +31,9 @@ class ProyekController extends Controller
     public function dashboard() {
         $pendingProjects = Project::where('status', 'Pending')->get();
         $inProgressProjects = Project::where('status', 'In Progress')->get();
+        $completedProjects = Project::where('status', 'Completed')->get();
     
-        return view('dashboard', compact('pendingProjects', 'inProgressProjects'));
+        return view('dashboard', compact('pendingProjects', 'inProgressProjects', 'completedProjects'));
     }
     
 
@@ -41,11 +42,15 @@ class ProyekController extends Controller
         $project = Project::findOrFail($id);
 
         // Perbarui status proyek
-        $project->update([
-            'status' => $request->input('status', 'In Progress'), // Default ke 'In Progress'
-        ]);
+        if ($project->status === 'Pending') {
+            $project->status = 'In Progress';
+        } elseif ($project->status === 'In Progress') {
+            $project->status = 'Completed';
+        }
 
-        return response()->json(['message' => 'Status proyek berhasil diperbarui!']);
+        $project->save();
+
+        return redirect()->route('dashboard')->with('success', 'Status berhasil dibuah!');
     }
 
     public function detail($id) {
