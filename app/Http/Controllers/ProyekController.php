@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProyekController extends Controller
 {
@@ -32,10 +33,10 @@ class ProyekController extends Controller
         $pendingProjects = Project::where('status', 'Pending')->get();
         $inProgressProjects = Project::where('status', 'In Progress')->get();
         $completedProjects = Project::where('status', 'Completed')->get();
-    
+
         return view('dashboard', compact('pendingProjects', 'inProgressProjects', 'completedProjects'));
     }
-    
+
 
     public function updateStatus(Request $request, $id) {
         // Validasi dan cari proyek berdasarkan ID
@@ -57,7 +58,17 @@ class ProyekController extends Controller
         $project = Project::findOrFail($id);
         return view('proyek.detail', compact('project'));
     }
-
-
     
+    // public function generatePdf($id)
+    public function generatePDF($id)
+    {
+    // Cari proyek berdasarkan ID
+    $project = Project::findOrFail($id);
+
+    // Load view dengan data proyek
+    $pdf = Pdf::loadView('pdf.project', ['project' => $project]);
+
+    // Unduh file PDF
+    return $pdf->download("Project_{$project->name}.pdf");
+    }
 }

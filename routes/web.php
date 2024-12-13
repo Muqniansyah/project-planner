@@ -39,6 +39,10 @@ Route::middleware('auth')->group(function () {
 
     // routing Laporan
     Route::get('/Laporan', [LaporanController::class,'index'])->name('Laporan.index');
+
+    //routing pdf
+    Route::get('/projects/pdf/{id}', [ProyekController::class, 'generatePdf'])->name('projects.pdf');
+
 });
 
 require __DIR__.'/auth.php';

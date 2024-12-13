@@ -30,6 +30,14 @@
                                 ${{ number_format($project->anggaran, 2) }}</p>
                             <p class="mt-2 text-xs text-yellow-500">Status: {{ $project->status }}</p>
 
+                            <!-- Tombol Export PDF -->
+                            <div class="flex justify-end mt-4">
+                                 <a href="{{ route('projects.pdf', $project->id) }}" 
+                                 class="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                     Export PDF
+                                </a>
+                            </div>
+
                             <!-- Tombol Next -->
                             <div class="flex justify-end mt-4">
                                 <a
@@ -39,13 +47,13 @@
                                 <form action="{{ route('proyek.updateStatus', $project->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    
+
                                     <button type="submit"
                                     class="flex items-center px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
                                     Next <i class="bi bi-arrow-right ms-2"></i>
                                 </button>
                                 </form>
-                                
+
                             </div>
                         </div>
                     @empty
@@ -67,6 +75,14 @@
                             <p class="mt-2 text-sm text-blue-600">Anggaran: ${{ number_format($project->anggaran, 2) }}
                             </p>
                             <p class="mt-2 text-xs text-blue-500">Status: {{ $project->status }}</p>
+
+                            <!-- Tombol Export PDF -->
+                            <div class="flex justify-end mt-4">
+                                <a href="{{ route('projects.pdf', $project->id) }}" 
+                                    class="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                Export PDF
+                                </a>
+                            </div>
 
                             <div class="flex justify-end mt-4">
                                 <a
@@ -97,6 +113,14 @@
                         <p class="mt-2 text-sm text-green-600">Sumber Daya Material: Material E</p>
                         <p class="mt-2 text-xs text-green-500">Status: Completed</p>
 
+                        <!-- Tombol Export PDF -->
+                        <div class="flex justify-end mt-4">
+                            <a href="{{ route('projects.pdf', $project->id) }}" 
+                             class="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600">
+                                 File PDF
+                            </a>
+                        </div>
+                        
                         <!-- Tombol Undo -->
                         <div class="flex justify-start mt-4">
                             <button
@@ -105,6 +129,8 @@
                                 <i class="bi bi-arrow-counterclockwise me-2"></i> Undo
                             </button>
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
