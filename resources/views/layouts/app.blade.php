@@ -15,6 +15,9 @@
     <!-- Gantt Chart -->
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 
+    <!-- icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
     <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
 

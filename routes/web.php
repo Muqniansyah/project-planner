@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/proyek', [ProyekController::class, 'index'])->name('proyek.index');
     Route::post('/proyek/store', [ProyekController::class, 'store'])->name('proyek.store');
     Route::patch('/proyek/{id}/status', [ProyekController::class, 'updateStatus'])->name('proyek.updateStatus');
+    Route::patch('/proyek/{id}/undo', [ProyekController::class, 'undo'])->name('proyek.undo');
     Route::get('/proyek/{project}', [ProjectDetailController::class, 'index'])->name('proyekdetail.index');
 
     // routing pendjadwalan
