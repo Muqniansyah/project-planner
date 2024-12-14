@@ -15,7 +15,7 @@
     /* Global Styles */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+      background: linear-gradient(to bottom right, #2563EB, #dfcdcd);
       color: #fff;
       height: 100vh;
       display: flex;
@@ -29,7 +29,7 @@
       text-align: center;
       max-width: 700px;
       padding: 2rem;
-      background: rgba(0, 0, 0, 0.6);
+      background: linear-gradient(to bottom right, #2563EB, #18215E);
       border-radius: 15px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
@@ -152,8 +152,8 @@
 
     <!-- Subtitle -->
     <p class="subtitle">
-      Atur, rencanakan, dan kelola proyek Anda dengan mudah dan efisien. 
-      Mulailah perjalanan Anda menuju produktivitas yang lebih tinggi dengan 
+      Atur, rencanakan, dan kelola proyek Anda dengan mudah dan efisien.
+      Mulailah perjalanan Anda menuju produktivitas yang lebih tinggi dengan
       fitur-fitur canggih kami.
     </p>
 
@@ -161,7 +161,7 @@
     <div class="btn-group">
       <a href="{{ route('login') }}" class="btn btn-login">Log In</a>
       <a href="{{ route('register') }}" class="btn btn-register">Register</a>
-      
+
     </div>
 
     <!-- Footer -->
