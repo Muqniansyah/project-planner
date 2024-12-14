@@ -58,6 +58,21 @@ class ProyekController extends Controller
         $project = Project::findOrFail($id);
         return view('proyek.detail', compact('project'));
     }
+    public function undo(Request $request, $id) {
+        // Temukan proyek berdasarkan ID
+        $project = Project::findOrFail($id);
+
+        // Perbarui status proyek secara dinamis
+        if ($project->status === 'Completed') {
+            $project->status = 'In Progress';
+        } elseif ($project->status === 'In Progress') {
+            $project->status = 'Pending';
+        }
+
+        $project->save();
+
+        return redirect()->route('dashboard')->with('success', 'Proyek berhasil dikembalikan ke status sebelumnya!');
+    }
     
     // public function generatePdf($id)
     public function generatePDF($id)
