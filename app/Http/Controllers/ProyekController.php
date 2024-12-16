@@ -30,11 +30,13 @@ class ProyekController extends Controller
     }
 
     public function dashboard() {
-        $pendingProjects = Project::where('status', 'Pending')->get();
-        $inProgressProjects = Project::where('status', 'In Progress')->get();
-        $completedProjects = Project::where('status', 'Completed')->get();
+        // Menambahkan pagination untuk setiap status proyek
+        $pendingProjects = Project::where('status', 'Pending')->paginate(2); // 5 proyek per halaman
+        $inProgressProjects = Project::where('status', 'In Progress')->paginate(2); // 5 proyek per halaman
+        $completedProjects = Project::where('status', 'Completed')->paginate(2); // 5 proyek per halaman
 
         return view('dashboard', compact('pendingProjects', 'inProgressProjects', 'completedProjects'));
+
     }
 
 
