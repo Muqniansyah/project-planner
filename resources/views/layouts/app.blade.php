@@ -44,6 +44,7 @@
             {{ $slot }}
         </main>
     </div>
+    <!-- Custom JavaScript -->
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
-
 </html>
