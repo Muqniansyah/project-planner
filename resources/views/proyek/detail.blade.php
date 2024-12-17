@@ -19,24 +19,46 @@
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul
                     class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white ">
-                    <li>
-                        <a href="#"
-                            class="block px-3 py-2 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 "
-                            aria-current="page">Gantt Chart</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-3 py-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 ">Sumber Daya</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-3 py-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 ">Setting</a>
-                    </li>
+                    @if (Auth::user()->role === 'edit')
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 "
+                                aria-current="page">Gantt Chart</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 ">Sumber Daya</a>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 ">Setting</a>
+                        </li>
+                    @elseif (Auth::user()->role === 'view')
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 "
+                                aria-current="page">Gantt Chart</a>
+                        </li>
+                        <!-- User view tidak melihat Sumber Daya dan Setting -->
+                    @endif
                 </ul>
             </div>
         </div>
     </nav>
 
+    @if (Auth::user()->role === 'edit')
+    <div class="mb-4">
+        <a href="{{ route('proyek.edit', $project->id) }}" class="btn btn-primary">Edit Proyek</a>
+        <a href="{{ route('proyek.updateStatus', $project->id) }}" class="btn btn-success">Ubah Status</a>
+    </div>
+    @endif
+
+    @if (Auth::user()->role === 'view')
+    <div class="mb-4">
+        <p>Anda hanya memiliki akses untuk melihat proyek ini.</p>
+    </div>
+    @endif
 
     <div id="gantt_here" style="width:100%; height:500px;"></div>
     <script type="text/javascript">
@@ -51,6 +73,11 @@
         dp.init(gantt);
         dp.setTransactionMode("REST", true); // Menggunakan mode REST dengan JSON
         console.log("Gantt data load URL:", "/api/data/{{ $project->id }}");
+
+        @if (Auth::user()->role === 'view')
+            gantt.config.readonly = true; // Membuat Gantt Chart hanya baca untuk User View
+        @endif
+
 
         dp.attachEvent("onBeforeUpdate", function(id, task, action) {
             action.project_id = {{ $project->id }};
