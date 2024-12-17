@@ -18,6 +18,21 @@ Route::get('/', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', [ProyekController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth', 'role:edit'])->group(function () {
+    // Routes for User Edit
+    Route::get('/project/manage', [ProjectController::class, 'index'])->name('project.manage');
+    Route::get('/tasks/manage', [TaskController::class, 'index'])->name('tasks.manage');
+    Route::get('/resources/manage', [ResourceController::class, 'index'])->name('resources.manage');
+    Route::get('/reports/manage', [ReportController::class, 'index'])->name('reports.manage');
+});
+
+Route::middleware(['auth', 'role:view'])->group(function () {
+    // Routes for User View
+    Route::get('/project/view', [ProjectController::class, 'view'])->name('project.view');
+    Route::get('/tasks/view', [TaskController::class, 'view'])->name('tasks.view');
+    Route::get('/resources/view', [ResourceController::class, 'view'])->name('resources.view');
+    Route::get('/reports/view', [ReportController::class, 'view'])->name('reports.view');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
