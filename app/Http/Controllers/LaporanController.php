@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Laporan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
@@ -36,5 +37,18 @@ class LaporanController extends Controller
 
         // Redirect dengan Pesan Sukses
         return redirect()->route('Laporan.index')->with('success', 'Laporan berhasil dibuat!');
+    }
+
+        // Method untuk mengunduh laporan sebagai PDF
+    public function downloadPDF($id)
+    {
+        // Ambil data laporan berdasarkan ID
+        $laporan = Laporan::findOrFail($id);
+
+        // Render view untuk PDF
+        $pdf = PDF::loadView('Laporan.pdf', compact('laporan'));
+
+        // Download file PDF dengan nama yang sesuai
+        return $pdf->download('Laporan-' . $laporan->title . '.pdf');
     }
 }
