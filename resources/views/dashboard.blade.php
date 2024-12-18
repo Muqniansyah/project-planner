@@ -26,7 +26,7 @@
                             <!-- Klik area ini akan membuka modal -->
                             <div 
                                 class="absolute inset-0 cursor-pointer"
-                                onclick="openModal('{{ $project->name }}', '{{ $project->description }}', '{{ number_format($project->anggaran, 2) }}')">
+                                onclick="openModal('{{ $project->id }}', '{{ $project->name }}', '{{ $project->description }}', '{{ number_format($project->anggaran, 2) }}')">
                             </div>
                             <!-- Konten Card -->
                             <h3 class="font-semibold text-yellow-700 text-md">{{ $project->name }}</h3>
@@ -73,7 +73,7 @@
                             <!-- Klik area ini akan membuka modal -->
                             <div 
                                 class="absolute inset-0 cursor-pointer"
-                                onclick="openModal('{{ $project->name }}', '{{ $project->description }}', '{{ number_format($project->anggaran, 2) }}')">
+                                onclick="openModal('{{ $project->id }}', '{{ $project->name }}', '{{ $project->description }}', '{{ number_format($project->anggaran, 2) }}')">
                             </div>
                             <!-- Konten Card -->
                             <h3 class="font-semibold text-blue-700 text-md">{{ $project->name }}</h3>
@@ -127,7 +127,7 @@
                             <!-- Klik area ini akan membuka modal -->
                             <div 
                                 class="absolute inset-0 cursor-pointer"
-                                onclick="openModal('{{ $project->name }}', '{{ $project->description }}', '{{ number_format($project->anggaran, 2) }}')">
+                                onclick="openModal('{{ $project->id }}', '{{ $project->name }}', '{{ $project->description }}', '{{ number_format($project->anggaran, 2) }}')">
                             </div>
                             <!-- Konten Card -->
                             <h3 class="font-semibold text-green-700 text-md">{{ $project->name }}</h3>
@@ -175,7 +175,7 @@
                         <p id="modalAnggaran" class="mt-4 text-sm text-gray-600"></p>
                         <div class="flex justify-end mt-6 space-x-4">
                             <button onclick="closeModal('projectModal')" class="px-4 py-2 text-sm text-white bg-gray-500 rounded hover:bg-gray-600">Close</button>
-                            <a href="{{ route('proyek.edit', $project->id) }}" id="editButton" class="px-4 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600">Edit</a>
+                            <a href="#" id="editButton" class="px-4 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600">Edit</a>
                         </div>
                     </div>
                 </div>
@@ -183,22 +183,3 @@
         </div>
     </div>
 </x-app-layout>
-
-<script>
-    // Fungsi untuk membuka modal pertama dan menampilkan data
-function openModal(title, description, anggaran) {
-    document.getElementById("modalTitle").innerText = title;
-    document.getElementById("modalDescription").innerText = description;
-    document.getElementById("modalAnggaran").innerText =
-        "Anggaran: " + anggaran;
-
-    // Menampilkan modal pertama
-    document.getElementById("projectModal").classList.remove("hidden");
-}
-
-// Fungsi untuk menutup modal berdasarkan id
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.add("hidden");
-}
-
-</script>

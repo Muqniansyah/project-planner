@@ -61,6 +61,7 @@ class ProyekController extends Controller
         $project = Project::findOrFail($id);
         return view('proyek.detail', compact('project'));
     }
+
     public function undo(Request $request, $id) {
         // Temukan proyek berdasarkan ID
         $project = Project::findOrFail($id);
@@ -78,32 +79,29 @@ class ProyekController extends Controller
     }
     
     // public function generatePdf($id)
-    public function generatePDF($id)
-    {
-    // Cari proyek berdasarkan ID
-    $project = Project::findOrFail($id);
+    public function generatePDF($id) {
+        // Cari proyek berdasarkan ID
+        $project = Project::findOrFail($id);
 
-    // Load view dengan data proyek
-    $pdf = Pdf::loadView('pdf.project', ['project' => $project]);
+        // Load view dengan data proyek
+        $pdf = Pdf::loadView('pdf.project', ['project' => $project]);
 
-    // Unduh file PDF
-    return $pdf->download("Project_{$project->name}.pdf");
+        // Unduh file PDF
+        return $pdf->download("Project_{$project->name}.pdf");
     }
 
-    public function edit($id)
-    {
-        // Temukan proyek berdasarkan ID
-        $project = Project::where('id', $id)->first();
+    public function edit($id) {
+        $project = Project::find($id);
+
         if (!$project) {
-            return redirect()->route('dashboard')->with('error', 'Proyek tidak ditemukan!');
+            abort(404, 'Proyek tidak ditemukan.');
         }
 
         // Kirim data proyek ke view edit
         return view('proyek.edit', compact('project'));
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
@@ -128,5 +126,4 @@ class ProyekController extends Controller
             return redirect()->route('dashboard')->with('error', 'Gagal memperbarui proyek: ' . $err->getMessage());
         }
     }
-
 }
