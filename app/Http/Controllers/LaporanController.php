@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan;
+use App\Exports\LaporanExport;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Maatwebsite\Excel\Facades\Excel;
 class LaporanController extends Controller
 {
     // Menampilkan Halaman Index dengan Data Laporan
@@ -51,4 +52,16 @@ class LaporanController extends Controller
         // Download file PDF dengan nama yang sesuai
         return $pdf->download('Laporan-' . $laporan->title . '.pdf');
     }
+    /**
+     * Unduh file Excel dari daftar laporan
+     */
+    public function exportExcel($id)
+    {
+        //Ambil Laporan berdasaran ID
+        $laporan = Laporan::findOrFail($id);
+
+        //Unduh file excel
+        return Excel::download(new LaporanExport, $laporan->title .'.xlsx');
+    }
+
 }

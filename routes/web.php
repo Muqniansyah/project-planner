@@ -52,10 +52,14 @@ Route::middleware('auth')->group(function () {
     // routing Laporan
     Route::get('/Laporan', [LaporanController::class,'index'])->name('Laporan.index');
     Route::post('/Laporan/store', [LaporanController::class, 'store'])->name('Laporan.store');
-    
+
     //routing pdf
     Route::get('/projects/pdf/{id}', [ProyekController::class, 'generatePdf'])->name('projects.pdf');
     Route::get('/laporan/pdf/{id}', [LaporanController::class, 'downloadPDF'])->name('Laporan.downloadPDF');
+
+    //routing excel
+    // Route::get('/laporan/excel', [LaporanController::class, 'exportExcel'])->name('Laporan.exportExcel');
+    Route::get('/laporan/excel/{id}', [LaporanController::class, 'exportExcel'])->name('Laporan.exportExcel');
 
 });
 

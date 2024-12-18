@@ -35,10 +35,12 @@
                                         <td class="px-4 py-2 text-gray-700">{{ $laporan->author }}</td>
                                         <td class="px-4 py-2 text-gray-700">{{ $laporan->report_date }}</td>
                                         <td class="px-4 py-2">
-                                            <a href="{{ route('Laporan.downloadPDF', $laporan->id) }}" class="mr-2 px-3 py-2 pd- text-white bg-blue-500 rounded hover:bg-blue-600">
+                                            <a href="{{ route('Laporan.downloadPDF', $laporan->id) }}" class="mr-2 px-2 py-1 pd- text-white bg-blue-500 rounded hover:bg-blue-600">
                                                 Unduh PDF
                                             </a>
-                                            <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh Excel</button>
+                                            <a href="{{ route('Laporan.exportExcel', $laporan->id) }}" class="mr-2 px-2 py-1 text-white bg-green-500 rounded hover:bg-green-600">
+                                                Unduh Excel
+                                            </a>
                                             <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Bagikan</button>
                                         </td>
                                     </tr>
