@@ -60,7 +60,7 @@
 
                 <!-- Pagination Links -->
                 <div class="mt-6">
-                    {{ $pendingProjects->links() }}
+                    {{ $pendingProjects->appends(request()->query())->links() }}
                 </div>
             </div>
 
@@ -114,7 +114,7 @@
 
                 <!-- Pagination Links -->
                 <div class="mt-6">
-                    {{ $pendingProjects->links() }}
+                {{ $inProgressProjects->links() }}
                 </div>
             </div>
 
@@ -161,7 +161,7 @@
 
                 <!-- Pagination Links -->
                 <div class="mt-6">
-                    {{ $pendingProjects->links() }}
+                    {{ $completedProjects->appends(request()->query())->links() }}
                 </div>
             </div>
 
@@ -175,41 +175,30 @@
                         <p id="modalAnggaran" class="mt-4 text-sm text-gray-600"></p>
                         <div class="flex justify-end mt-6 space-x-4">
                             <button onclick="closeModal('projectModal')" class="px-4 py-2 text-sm text-white bg-gray-500 rounded hover:bg-gray-600">Close</button>
-                            <button onclick="openEditModal()" class="px-4 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600">Edit</button>
+                            <a href="{{ route('proyek.edit', $project->id) }}" id="editButton" class="px-4 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600">Edit</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal Box 2 (Edit Form) -->
-            <div id="editModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-800 bg-opacity-75">
-                <div class="w-1/3 bg-white rounded-lg shadow-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-700">Edit Project</h3>
-                        
-                        <!-- Form untuk perubahan -->
-                        <form id="projectForm" method="POST">
-                            <div class="mt-4">
-                                <label for="judul" class="block text-sm text-gray-700">Judul</label>
-                                <input type="text" id="judul" name="judul" class="w-full px-4 py-2 mt-1 border rounded-lg" value="{{ old('name') ?? $project->name }}"/>
-                            </div>
-                            <div class="mt-4">
-                                <label for="deskripsi" class="block text-sm text-gray-700">Deskripsi</label>
-                                <textarea id="deskripsi" name="deskripsi" class="w-full px-4 py-2 mt-1 border rounded-lg" rows="4" value="{{ old('description') ?? $project->description }}"></textarea>
-                            </div>
-                            <div class="mt-4">
-                                <label for="anggaran" class="block text-sm text-gray-700">Anggaran</label>
-                                <input type="number" id="anggaran" name="anggaran" class="w-full px-4 py-2 mt-1 border rounded-lg" value="{{ old('anggaran') ?? number_format($project->anggaran, 2) }}"/>
-                            </div>
-                            
-                            <div class="flex justify-end mt-6 space-x-4">
-                                <button type="button" onclick="closeModal('editModal')" class="px-4 py-2 text-sm text-white bg-gray-500 rounded hover:bg-gray-600">Close</button>
-                                <button type="submit" class="px-4 py-2 text-sm text-white bg-blue-500 rounded hover:bg-blue-600">Save Changes</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    // Fungsi untuk membuka modal pertama dan menampilkan data
+function openModal(title, description, anggaran) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalDescription").innerText = description;
+    document.getElementById("modalAnggaran").innerText =
+        "Anggaran: " + anggaran;
+
+    // Menampilkan modal pertama
+    document.getElementById("projectModal").classList.remove("hidden");
+}
+
+// Fungsi untuk menutup modal berdasarkan id
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.add("hidden");
+}
+
+</script>
