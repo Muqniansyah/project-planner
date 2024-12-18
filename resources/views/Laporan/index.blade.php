@@ -28,32 +28,20 @@
                                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="border-b">
-                                <td class="px-4 py-2 text-gray-700">Laporan Perencanaan A</td>
-                                <td class="px-4 py-2 text-gray-700">Anwar</td>
-                                <td class="px-4 py-2 text-gray-700">2024-11-01</td>
-                                {{-- <td class="px-4 py-2 text-gray-700">2024-11-20</td> --}}
-                                {{-- <td class="px-4 py-2 text-gray-700">2024-11-20</td> --}}
-                                <td class="px-4 py-2">
-                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh PDF</button>
-                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh Excel</button>
-                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Bagikan</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2 text-gray-700">Laporan Progress B</td>
-                                <td class="px-4 py-2 text-gray-700">Budi</td>
-                                <td class="px-4 py-2 text-gray-700">2024-10-01</td>
-                                {{-- <td class="px-4 py-2 text-gray-700">2024-11-15</td>
-                                <td class="px-4 py-2 text-gray-700">2024-11-15</td> --}}
-                                <td class="px-4 py-2">
-                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh PDF</button>
-                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh Excel</button>
-                                    <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Bagikan</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                            <tbody>
+                                @foreach ($laporans as $laporan)
+                                    <tr class="border-b">
+                                        <td class="px-4 py-2 text-gray-700">{{ $laporan->title }}</td>
+                                        <td class="px-4 py-2 text-gray-700">{{ $laporan->author }}</td>
+                                        <td class="px-4 py-2 text-gray-700">{{ $laporan->report_date }}</td>
+                                        <td class="px-4 py-2">
+                                            <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh PDF</button>
+                                            <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Unduh Excel</button>
+                                            <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Bagikan</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                     </table>
                 </div>
             </section>

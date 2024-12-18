@@ -32,14 +32,7 @@ class LaporanController extends Controller
         ]);
 
         // Simpan ke Database
-        Laporan::create([
-            'author' => $request->input('author'),
-            'report_date' => $request->input('report_date'),
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-        ]);
-
-        Laporan::create($request->all());
+        Laporan::create($request->all()); // Ini cukup
 
         // Redirect dengan Pesan Sukses
         return redirect()->route('Laporan.index')->with('success', 'Laporan berhasil dibuat!');
