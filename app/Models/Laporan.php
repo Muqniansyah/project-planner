@@ -9,7 +9,10 @@ class Laporan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['project_id', 'title', 'generated_by', 'file_path'];
+    protected $table = 'laporans'; // Nama tabel
+
+    protected $fillable = ['author', 'report_date', 'title' , 'description'];
+    // protected $fillable = ['author', 'title' , 'contect','date',];
 
     /**
      * Relasi ke model Project
@@ -27,3 +30,4 @@ class Laporan extends Model
         return $this->belongsTo(User::class, 'generated_by');
     }
 }
+
