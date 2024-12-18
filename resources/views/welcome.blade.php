@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Project Planner</title>
+  <!-- icons font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     /* Reset CSS */
     * {
@@ -15,21 +17,23 @@
     /* Global Styles */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #2563EB, #dfcdcd);
-      color: #fff;
-      height: 100vh;
+      background-image: url('../images/background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 90vh;
       display: flex;
       align-items: center;
       justify-content: center;
       background-attachment: fixed;
-      background-size: cover;
     }
 
     .container {
       text-align: center;
       max-width: 700px;
       padding: 2rem;
-      background: linear-gradient(to bottom right, #2563EB, #18215E);
+      background: rgba(255, 255, 255, 0.1); /* Putih transparan */
+      backdrop-filter: blur(10px); /* Efek blur */
       border-radius: 15px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
@@ -96,7 +100,7 @@
     .footer {
       margin-top: 2rem;
       font-size: 0.9rem;
-      color: #ddd;
+      color: #fff;
     }
 
     .footer a {
@@ -144,8 +148,9 @@
   <div class="container">
     <!-- Logo -->
     <div class="logo">
-      <img src="https://via.placeholder.com/100" alt="Project Planner Logo">
+      <i class="fas fa-tasks fa-4x text-blue-500"></i>
     </div>
+
 
     <!-- Title -->
     <h1 class="title">Project Planner</h1>

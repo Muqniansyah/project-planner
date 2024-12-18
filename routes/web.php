@@ -31,9 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/proyek/{id}/status', [ProyekController::class, 'updateStatus'])->name('proyek.updateStatus');
     Route::patch('/proyek/{id}/undo', [ProyekController::class, 'undo'])->name('proyek.undo');
     Route::get('/proyek/{project}', [ProjectDetailController::class, 'index'])->name('proyekdetail.index');
+    Route::get('/proyek/{id}/edit', [ProyekController::class, 'edit'])->name('proyek.edit');
+    Route::put('/proyek/{id}', [ProyekController::class, 'update'])->name('proyek.update');
+
 
     // routing pendjadwalan
-    Route::get('/pendjadwalan', [PendjadwalanController::class,'index'])->name('pendjadwalan.index');
+    // Route::get('/pendjadwalan', [PendjadwalanController::class,'index'])->name('pendjadwalan.index');
 
     // routing ManajemenSD
     Route::get('/ManajemenSD', [ManajemenSDController::class,'index'])->name('ManajemenSD.index');

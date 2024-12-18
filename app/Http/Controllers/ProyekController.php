@@ -31,9 +31,10 @@ class ProyekController extends Controller
 
     public function dashboard() {
         // Menambahkan pagination untuk setiap status proyek
-        $pendingProjects = Project::where('status', 'Pending')->paginate(2); // 5 proyek per halaman
-        $inProgressProjects = Project::where('status', 'In Progress')->paginate(2); // 5 proyek per halaman
-        $completedProjects = Project::where('status', 'Completed')->paginate(2); // 5 proyek per halaman
+        $pendingProjects = Project::where('status', 'Pending')->paginate(2, ['*'], 'pendingPage');
+        $inProgressProjects = Project::where('status', 'In Progress')->paginate(2, ['*'], 'inProgressPage');
+        $completedProjects = Project::where('status', 'Completed')->paginate(2, ['*'], 'completedPage');
+        
 
         return view('dashboard', compact('pendingProjects', 'inProgressProjects', 'completedProjects'));
 
@@ -88,4 +89,44 @@ class ProyekController extends Controller
     // Unduh file PDF
     return $pdf->download("Project_{$project->name}.pdf");
     }
+
+    public function edit($id)
+    {
+        // Temukan proyek berdasarkan ID
+        $project = Project::where('id', $id)->first();
+        if (!$project) {
+            return redirect()->route('dashboard')->with('error', 'Proyek tidak ditemukan!');
+        }
+
+        // Kirim data proyek ke view edit
+        return view('proyek.edit', compact('project'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'anggaran' => 'required|numeric|min:0',
+        ]);
+
+        try {
+            // Temukan proyek berdasarkan ID
+            $project = Project::findOrFail($id);
+
+            // Update data proyek
+            $project->update([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'anggaran' => $request->input('anggaran'),
+            ]);
+
+            // Redirect ke dashboard dengan pesan sukses
+            return redirect()->route('dashboard')->with('success', 'Proyek berhasil diperbarui!');
+        } catch (\Exception $err) {
+            return redirect()->route('dashboard')->with('error', 'Gagal memperbarui proyek: ' . $err->getMessage());
+        }
+    }
+
 }
