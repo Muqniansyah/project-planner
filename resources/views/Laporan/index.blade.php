@@ -38,11 +38,19 @@
                                             <a href="{{ route('Laporan.downloadPDF', $laporan->id) }}" class="mr-2 px-2 py-1 pd- text-white bg-blue-500 rounded hover:bg-blue-600">
                                                 Unduh PDF
                                             </a>
+                                            
                                             <a href="{{ route('Laporan.exportExcel', $laporan->id) }}" class="mr-2 px-2 py-1 text-white bg-green-500 rounded hover:bg-green-600">
                                                 Unduh Excel
                                             </a>
-                                            <button class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">Bagikan</button>
-                                        </td>
+                                            
+                                            <form action="{{ route('Laporan.share', $laporan->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <input type="email" name="email" placeholder="Masukkan email penerima" required
+                                                    class="px-2 py-1 border rounded">
+                                                <button type="submit" class="px-2 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">
+                                                    Bagikan
+                                                </button>
+                                            </form>                                                                                   </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -87,8 +95,8 @@
                         </div>
 
                         <button type="submit"
-                            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                            Submit
+                            class="px-4 py-2 text-lg bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                            Submit 
                         </button>
                     </form>
                 </div>

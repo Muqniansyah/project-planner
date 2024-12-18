@@ -8,16 +8,25 @@ use App\Http\Controllers\ManajemenSDController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProjectDetailController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Mail;
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', [ProyekController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
+//send email
+Route::get('/test-email', function () {
+    Mail::raw('Ini adalah email uji coba dari Laravel menggunakan Brevo SMTP.', function ($message) {
+        $message->to('recipient@example.com')
+                ->subject('Uji Coba Email Brevo');
+    });
+
+    return 'Email berhasil dikirim!';
+});
 Route::middleware(['auth', 'role:edit'])->group(function () {
     // Routes for User Edit
-    Route::get('/project/manage', [ProjectController::class, 'index'])->name('project.manage');
+    Route::get('/project/manage', [ProyekController::class, 'index'])->name('project.manage');
     Route::get('/tasks/manage', [TaskController::class, 'index'])->name('tasks.manage');
     Route::get('/resources/manage', [ResourceController::class, 'index'])->name('resources.manage');
     Route::get('/reports/manage', [ReportController::class, 'index'])->name('reports.manage');
@@ -60,6 +69,11 @@ Route::middleware('auth')->group(function () {
     //routing excel
     // Route::get('/laporan/excel', [LaporanController::class, 'exportExcel'])->name('Laporan.exportExcel');
     Route::get('/laporan/excel/{id}', [LaporanController::class, 'exportExcel'])->name('Laporan.exportExcel');
+
+    //send email
+    Route::get('/laporan/share/{id}', [LaporanController::class, 'shareReport'])->name('Laporan.share');
+    Route::post('/laporan/share/{id}', [LaporanController::class, 'shareReport'])->name('Laporan.share');
+
 
 });
 

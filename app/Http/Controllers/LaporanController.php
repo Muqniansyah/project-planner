@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Laporan;
 use App\Exports\LaporanExport;
-use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LaporanMail;
+use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Support\Facades\Log;
+
+
 class LaporanController extends Controller
 {
     // Menampilkan Halaman Index dengan Data Laporan
@@ -50,7 +56,7 @@ class LaporanController extends Controller
         $pdf = PDF::loadView('Laporan.pdf', compact('laporan'));
 
         // Download file PDF dengan nama yang sesuai
-        return $pdf->download('Laporan-' . $laporan->title . '.pdf');
+        return $pdf->download('Laporan ' . $laporan->title . '.pdf');
     }
     /**
      * Unduh file Excel dari daftar laporan
@@ -61,7 +67,37 @@ class LaporanController extends Controller
         $laporan = Laporan::findOrFail($id);
 
         //Unduh file excel
-        return Excel::download(new LaporanExport, $laporan->title .'.xlsx');
+        return Excel::download(export: new LaporanExport, fileName: 'Laporan '. $laporan->title .'.xlsx');
     }
 
+// send email
+public function shareReport(Request $request, $id)
+{
+    // Validasi input email
+    $request->validate([
+        'email' => 'required|email',
+    ]);
+
+    // Ambil data laporan berdasarkan ID
+    $laporan = Laporan::findOrFail($id);
+
+    try {
+        // Log: Menampilkan informasi email dan laporan
+        Log::info('Mengirim email ke: ' . $request->email);
+        Log::info('Subject: Laporan Proyek - ' . $laporan->title);
+
+        // Kirim email
+        Mail::to($request->email)->send(new LaporanMail($laporan));
+
+        // Redirect jika berhasil
+        return redirect()->route('Laporan.index')->with('success', 'Laporan berhasil dikirim ke ' . $request->email);
+    } catch (\Exception $e) {
+        // Log error
+        Log::error('Error saat mengirim email: ' . $e->getMessage());
+
+        return redirect()->route('Laporan.index')->with('error', 'Gagal mengirim email: ' . $e->getMessage());
+    }
 }
+
+}
+
