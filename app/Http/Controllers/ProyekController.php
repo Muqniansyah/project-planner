@@ -17,6 +17,8 @@ class ProyekController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'anggaran' => 'required|numeric|min:0',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
         ]);
 
         Project::create([
@@ -24,6 +26,8 @@ class ProyekController extends Controller
             'description' => $request->input('description'),
             'anggaran' => $request->input('anggaran'),
             'status' => 'Pending', // Status default
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Proyek berhasil dibuat!');

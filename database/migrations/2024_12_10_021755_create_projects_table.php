@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable(); // Deskripsi proyek
             $table->decimal('anggaran', 15, 2); // Anggaran proyek
             $table->string('status')->default('Pending'); // Status default "Pending"
+            $table->dateTime('start_date');
+            $table->dateTime('end_date')->nullable();
             $table->timestamps(); // created_at dan updated_at
         });
     }

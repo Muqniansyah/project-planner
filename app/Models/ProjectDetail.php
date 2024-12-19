@@ -18,4 +18,6 @@ class ProjectDetail extends Model
 
     protected $table = 'project_details';
     protected $fillable = ['text', 'duration', 'start_date', 'end_date', 'progress', 'parent', 'project_id'];
+
+    
 }

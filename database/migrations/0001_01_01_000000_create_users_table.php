@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['manager', 'karyawan'])->default('karyawan');
-            $table->enum('jobdesk', ['frontend', 'backend', 'system analyst', 'tester', 'project manager'])->nullable();
+            $table->enum('role', ['edit', 'view'])->default('view');
+            $table->string('jobdesk')->nullable();
+            $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

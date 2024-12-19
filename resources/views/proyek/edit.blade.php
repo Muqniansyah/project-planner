@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold text-gray-800 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             Edit Proyek
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <section class="bg-white shadow-md rounded-lg mb-6">
-                <header class="bg-blue-600 text-white p-4 rounded-t-lg">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <section class="mb-6 bg-white rounded-lg shadow-md">
+                <header class="p-4 text-white bg-blue-600 rounded-t-lg">
                     <h5 class="text-lg font-semibold">Edit Proyek</h5>
                 </header>
                 <div class="p-4">
@@ -31,7 +31,7 @@
                             class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500" required>
 
                         <button type="submit" 
-                            class="w-full mt-4 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+                            class="w-full px-4 py-2 mt-4 text-white bg-blue-600 rounded hover:bg-blue-700">
                             Simpan Perubahan
                         </button>
                     </form>

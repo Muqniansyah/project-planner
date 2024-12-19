@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_details', function (Blueprint $table) {
+        Schema::create('project_sumber_dayas', function (Blueprint $table) {
             $table->id();
-            $table->string('text');
-            $table->integer('duration');
-            $table->float('progress');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date')->nullable();
-            $table->enum('status', ['Pending', 'In Progress', 'Completed'])->default('Pending');
-            $table->integer('parent');
             $table->unsignedBigInteger('project_id');
-            $table->timestamps();
-
+            $table->unsignedBigInteger('sumber_daya_id');   
+            $table->integer('quantity');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('sumber_daya_id')->references('id')->on('sumber_dayas')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_details');
+        Schema::dropIfExists('project_sumber_dayas');
     }
 };

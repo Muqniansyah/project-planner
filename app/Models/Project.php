@@ -9,7 +9,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'anggaran', 'status'];
+    protected $fillable = ['name', 'description', 'anggaran', 'status', 'start_date', 'end_date'];
 
     /**
      * Relasi ke model ProjectDetail
