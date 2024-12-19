@@ -35,7 +35,7 @@
                             <a href="{{ route('dashboard') }}" class="px-3 py-2 text-sm font-medium  rounded-md {{ Request::is('dashboard*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}"
                                 aria-current="page">Dashboard</a>
 
-                            <div class="relative">
+                            {{-- <div class="relative">
                                 <button type="button"
                                     class="flex items-center px-3 py-1.5 font-medium {{ Request::is('Laporan*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md gap-x-1 text-sm/6"
                                     data-dropdown-button>
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <a href="{{ route('proyek.index') }}"
                                 class="px-3 py-2 text-sm font-medium {{ Request::is('proyek*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md">Project</a>

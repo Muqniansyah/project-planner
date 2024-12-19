@@ -53,6 +53,12 @@
             class="px-4 py-2 mb-2 text-sm font-medium text-center text-green-700 border border-green-700 rounded-full hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 me-2">
             Settings
         </button>
+        <button type="button"
+            onclick="window.location='{{ route('Laporan.index') }}'"
+            class="px-4 py-2 mb-2 text-sm font-medium text-center text-green-700 border border-green-700 rounded-full hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 me-2">
+            Project Report
+        </button>
+
     </div>
 
 

@@ -5,7 +5,7 @@
 
     <x-slot name="header">
         <h2 class="text-xl font-semibold text-gray-800 leading-tight">
-            Modul Laporan Proyek
+            Laporan Proyek
         </h2>
     </x-slot>
 
@@ -38,11 +38,11 @@
                                             <a href="{{ route('Laporan.downloadPDF', $laporan->id) }}" class="mr-2 px-2 py-1 pd- text-white bg-blue-500 rounded hover:bg-blue-600">
                                                 Unduh PDF
                                             </a>
-                                            
+
                                             <a href="{{ route('Laporan.exportExcel', $laporan->id) }}" class="mr-2 px-2 py-1 text-white bg-green-500 rounded hover:bg-green-600">
                                                 Unduh Excel
                                             </a>
-                                            
+
                                             <form action="{{ route('Laporan.share', $laporan->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 <input type="email" name="email" placeholder="Masukkan email penerima" required
@@ -96,7 +96,7 @@
 
                         <button type="submit"
                             class="px-4 py-2 text-lg bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                            Submit 
+                            Submit
                         </button>
                     </form>
                 </div>
