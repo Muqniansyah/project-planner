@@ -24,21 +24,7 @@ Route::get('/test-email', function () {
 
     return 'Email berhasil dikirim!';
 });
-Route::middleware(['auth', 'role:edit'])->group(function () {
-    // Routes for User Edit
-    Route::get('/project/manage', [ProyekController::class, 'index'])->name('project.manage');
-    Route::get('/tasks/manage', [TaskController::class, 'index'])->name('tasks.manage');
-    Route::get('/resources/manage', [ResourceController::class, 'index'])->name('resources.manage');
-    Route::get('/reports/manage', [ReportController::class, 'index'])->name('reports.manage');
-});
 
-Route::middleware(['auth', 'role:view'])->group(function () {
-    // Routes for User View
-    Route::get('/project/view', [ProjectController::class, 'view'])->name('project.view');
-    Route::get('/tasks/view', [TaskController::class, 'view'])->name('tasks.view');
-    Route::get('/resources/view', [ResourceController::class, 'view'])->name('resources.view');
-    Route::get('/reports/view', [ReportController::class, 'view'])->name('reports.view');
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -57,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     // routing ManajemenSD
     Route::get('/ManajemenSD', [ManajemenSDController::class,'index'])->name('ManajemenSD.index');
+    Route::post('/ManajemenSD/store', [ManajemenSDController::class,'store'])->name('ManajemenSD.store');
 
     // routing Laporan
     Route::get('/Laporan', [LaporanController::class,'index'])->name('Laporan.index');

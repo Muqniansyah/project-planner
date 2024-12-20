@@ -31,7 +31,7 @@
                             <!-- Konten Card -->
                             <h3 class="font-semibold text-yellow-700 text-md">{{ $project->name }}</h3>
                             <p class="mt-2 text-sm text-yellow-600">Deskripsi: {{ $project->description }}</p>
-                            <p class="mt-2 text-sm text-yellow-600">Anggaran: ${{ number_format($project->anggaran, 2) }}</p>
+                            <p class="mt-2 text-sm text-yellow-600">Anggaran: Rp.{{ number_format($project->anggaran, 2) }}</p>
                             <p class="mt-2 text-xs text-yellow-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->
@@ -78,7 +78,7 @@
                             <!-- Konten Card -->
                             <h3 class="font-semibold text-blue-700 text-md">{{ $project->name }}</h3>
                             <p class="mt-2 text-sm text-blue-600">Deskripsi: {{ $project->description }}</p>
-                            <p class="mt-2 text-sm text-blue-600">Anggaran: ${{ number_format($project->anggaran, 2) }}</p>
+                            <p class="mt-2 text-sm text-blue-600">Anggaran: Rp.{{ number_format($project->anggaran, 2) }}</p>
                             <p class="mt-2 text-xs text-blue-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->
@@ -132,7 +132,7 @@
                             <!-- Konten Card -->
                             <h3 class="font-semibold text-green-700 text-md">{{ $project->name }}</h3>
                             <p class="mt-2 text-sm text-green-600">Deskripsi: {{ $project->description }}</p>
-                            <p class="mt-2 text-sm text-green-600">Anggaran: ${{ number_format($project->anggaran, 2) }}</p>
+                            <p class="mt-2 text-sm text-green-600">Anggaran: Rp.{{ number_format($project->anggaran, 2) }}</p>
                             <p class="mt-2 text-xs text-green-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->

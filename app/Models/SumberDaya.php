@@ -9,13 +9,13 @@ class SumberDaya extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['project_id', 'type', 'name', 'quantity'];
+    protected $fillable = ['project_id', 'name', 'type', 'quantity', 'status'];
 
     /**
      * Relasi ke model Project
      */
     public function project()
     {
-        return $this->belongsTo(Project::class, 'project_id');
+        return $this->belongsTo(Project::class, 'project_id')->nullable();
     }
 }
