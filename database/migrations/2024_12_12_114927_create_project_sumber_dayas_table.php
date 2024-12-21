@@ -14,11 +14,19 @@ return new class extends Migration
         Schema::create('project_sumber_dayas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('sumber_daya_id');   
-            $table->integer('quantity');
+            $table->unsignedBigInteger('sumber_daya_id');
+            $table->string('jenis');
+            $table->integer('quantity'); // Kuantitas yang dialokasikan
+
+            // Definisi Foreign Key
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->foreign('sumber_daya_id')->references('id')->on('sumber_dayas')->onDelete('cascade');
+            
+            // Timestamp untuk mencatat waktu
             $table->timestamps();
+
+            // Menambahkan index untuk kolom project_id dan sumber_daya_id
+            $table->index(['project_id', 'sumber_daya_id']);
         });
     }
 

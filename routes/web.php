@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function () {
     // routing ManajemenSD
     Route::get('/ManajemenSD', [ManajemenSDController::class,'index'])->name('ManajemenSD.index');
     Route::post('/ManajemenSD/store', [ManajemenSDController::class,'store'])->name('ManajemenSD.store');
+    Route::get('/ManajemenSD/edit/{id}', [ManajemenSDController::class, 'edit'])->name('ManajemenSD.edit');
+    Route::put('/ManajemenSD/{id}', [ManajemenSDController::class, 'update'])->name('ManajemenSD.update');
+    Route::get('/ManajemenSD/view', [ManajemenSDController::class, 'view'])->name('ManajemenSD.view');
+    Route::post('/ManajemenSD/storeAllocation', [ManajemenSDController::class, 'storeAllocation'])->name('ManajemenSD.storeAllocation');
 
     // routing Laporan
     Route::get('/Laporan', [LaporanController::class,'index'])->name('Laporan.index');
