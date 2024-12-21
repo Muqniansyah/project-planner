@@ -9,9 +9,16 @@ use App\Models\ProjectSumberDaya;
 
 class ManajemenSDController extends Controller
 {
-    public function index() {
-        $resources = SumberDaya::all(); // Ambil semua data dari database
+    public function index(Request $request) {
+        // Tangkap keyword pencarian
+        $search = $request->input('search');
 
+        // Query sumber daya dengan pencarian (jika ada)
+        $resources = SumberDaya::when($search, function ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('type', 'like', '%' . $search . '%');
+        })->paginate(5); // Pagination 5 item per halaman
+        
         // Ambil semua data proyek
         $projects = Project::all(); 
 
@@ -73,33 +80,37 @@ class ManajemenSDController extends Controller
         }
     }
 
-    public function view() {
-        // Ambil semua data proyek
-        $projects = Project::all();
+    public function view($id) {
+        // Ambil data proyek berdasarkan ID
+        $project = Project::findOrFail($id);
     
-        // Ambil semua data alokasi sumber daya yang ada
-        $allocations = ProjectSumberDaya::with('project', 'sumberDaya')->get();
+        // Ambil alokasi sumber daya yang sesuai dengan proyek ini
+        $allocations = ProjectSumberDaya::with('sumberDaya')
+            ->where('project_id', $id)
+            ->get();
     
         // Kirim data proyek dan alokasi ke view
-        return view('ManajemenSD.view', compact('projects', 'allocations'));
+        return view('ManajemenSD.view', compact('project', 'allocations'));
     }
 
     public function storeAllocation(Request $request) {
         $request->validate([
             'project_id' => 'required|exists:projects,id',
             'sumber_daya_id' => 'required|exists:sumber_dayas,id',
-            'quantity' => 'required|integer|min:1',  // Pastikan kuantitasnya valid
-            'jenis' => 'required|string|max:255',    // Validasi jenis sumber daya
         ]);
     
-        // Membuat alokasi baru
+        // Ambil data sumber daya
+        $resource = SumberDaya::findOrFail($request->sumber_daya_id);
+    
+        // Gunakan nilai dari database
         ProjectSumberDaya::create([
             'project_id' => $request->project_id,
-            'sumber_daya_id' => $request->sumber_daya_id,
-            'quantity' => $request->quantity,
-            'jenis' => $request->jenis,  // Menambahkan jenis
+            'sumber_daya_id' => $resource->id,
+            'quantity' => $resource->quantity,
+            'jenis' => $resource->type,
         ]);
     
-        return redirect()->route('ManajemenSD.view')->with('success', 'Sumber Daya berhasil dialokasikan ke proyek!');
+        return redirect()->route('ManajemenSD.view', ['id' => $request->project_id])
+            ->with('success', 'Sumber Daya berhasil dialokasikan ke proyek!');
     }
 }

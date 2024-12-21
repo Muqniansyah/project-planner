@@ -20,6 +20,23 @@
     <!-- Bagian konten utama halaman -->
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Search and Filter -->
+            <form method="GET" action="{{ route('ManajemenSD.index') }}" class="mb-6 flex items-center space-x-4">
+                <input 
+                    type="text" 
+                    name="search" 
+                    placeholder="Cari Sumber Daya..." 
+                    value="{{ request('search') }}" 
+                    class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                >
+                <button 
+                    type="submit" 
+                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                    Cari
+                </button>
+            </form>
+
             <!-- Resource Table -->
             <section class="bg-white shadow-md rounded-lg mb-6">
                 <header class="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
@@ -70,6 +87,10 @@
                     </table>
                 </div>
             </section>
+            <!-- Pagination -->
+            <div class="mt-4 mb-4 flex justify-center">
+                {{ $resources->appends(request()->query())->links() }}
+            </div>
 
             <!-- Allocation Form -->
             <section class="bg-white shadow-md rounded-lg mb-6">
@@ -81,15 +102,19 @@
                         @csrf
                         <!-- Pilih Sumber Daya -->
                         <div class="mb-4">
-                            <label for="resource_id" class="block mb-2 text-sm font-medium text-gray-700">
+                            <label for="sumber_daya_id" class="block mb-2 text-sm font-medium text-gray-700">
                                 Sumber Daya:
                             </label>
-                            <select id="resource_id" name="resource_id"
+                            <select id="sumber_daya_id" name="sumber_daya_id"
                                 class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
-                                required>
+                                required onchange="updateResourceInfo()">
                                 <option value="">Pilih Sumber Daya</option>
                                 @foreach ($resources as $resource)
-                                    <option value="{{ $resource->id }}">{{ $resource->name }}</option>
+                                    <option value="{{ $resource->id }}" 
+                                            data-quantity="{{ $resource->quantity }}" 
+                                            data-type="{{ $resource->type }}">
+                                        {{ $resource->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -107,6 +132,26 @@
                                     <option value="{{ $project->id }}">{{ $project->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <!-- Kuantitas -->
+                        <div class="mb-4">
+                            <label for="quantity" class="block mb-2 text-sm font-medium text-gray-700">
+                                Kuantitas:
+                            </label>
+                            <input type="number" id="quantity" name="quantity" min="1"
+                                class="w-full p-2 border border-gray-300 rounded bg-gray-100 cursor-not-allowed focus:ring-0"
+                                disabled required>
+                        </div>
+
+                        <!-- Jenis -->
+                        <div class="mb-4">
+                            <label for="jenis" class="block mb-2 text-sm font-medium text-gray-700">
+                                Jenis Sumber Daya:
+                            </label>
+                            <input type="text" id="jenis" name="jenis"
+                                class="w-full p-2 border border-gray-300 rounded bg-gray-100 cursor-not-allowed focus:ring-0"
+                                disabled required>
                         </div>
 
                         <!-- Tombol -->
@@ -208,6 +253,23 @@
             document.getElementById('detailQuantity').textContent = resource.quantity;
             document.getElementById('detailStatus').textContent = resource.status;
             toggleDetailModal(true);
+        }
+
+        function updateResourceInfo() {
+            const sumberDayaDropdown = document.getElementById('sumber_daya_id');
+            const selectedOption = sumberDayaDropdown.options[sumberDayaDropdown.selectedIndex];
+
+            // Ambil data dari atribut data-quantity dan data-type
+            const quantity = selectedOption.getAttribute('data-quantity');
+            const type = selectedOption.getAttribute('data-type');
+
+            // Update nilai input
+            document.getElementById('quantity').value = quantity || '';
+            document.getElementById('jenis').value = type || '';
+
+            // Aktifkan atau tetap disabled
+            document.getElementById('quantity').disabled = true;
+            document.getElementById('jenis').disabled = true;
         }
     </script>
 </x-app-layout>

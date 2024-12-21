@@ -14,27 +14,29 @@
             <!-- Daftar Sumber Daya -->
             <section class="bg-white shadow-md rounded-lg mb-6">
                 <header class="bg-blue-600 text-white p-4 rounded-t-lg">
-                    <h5 class="text-lg font-semibold">Daftar Sumber Daya</h5>
+                    <h5 class="text-lg font-semibold">Daftar Sumber Daya {{ $project->name }}</h5>
                 </header>
                 <div class="p-4 overflow-x-auto">
                     <table class="min-w-full border border-gray-200 rounded-lg">
                         <thead>
                             <tr class="bg-blue-100">
                                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Nama Sumber Daya</th>
-                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Jenis Sumber Daya</th>
                                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Jenis</th>
                                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-800">Kuantitas</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach ($allocations as $allocation)
-                            <tr>
-                                <td class="px-4 py-2">{{ $allocation->project->name }}</td>
-                                <td class="px-4 py-2">{{ $allocation->sumberDaya->name }}</td>
-                                <td class="px-4 py-2">{{ $allocation->jenis }}</td> 
-                                <td class="px-4 py-2">{{ $allocation->quantity }}</td>
-                            </tr>
-                        @endforeach
+                            @forelse ($allocations as $allocation)
+                                <tr>
+                                    <td class="px-4 py-2">{{ $allocation->sumberDaya->name }}</td>
+                                    <td class="px-4 py-2">{{ $allocation->jenis }}</td>
+                                    <td class="px-4 py-2">{{ $allocation->quantity }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="px-4 py-2 text-center">Tidak ada sumber daya untuk proyek ini.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
