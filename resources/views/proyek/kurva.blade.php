@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyek Detail</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-
-    <!-- Grafik Progres -->
+<!-- Grafik Progres -->
     <div style="width: 80%; margin: auto;">
         <canvas id="progressChart"></canvas>
     </div>
@@ -33,10 +23,10 @@
 
     <script>
         // Data dari server (Blade Laravel)
-        const cumulativeProgress = @json($cumulativeProgressPercentage);
+        const cumulativeProgress = [0, ...@json($cumulativeProgressPercentage)];
 
-        // Labels (minggu ke-1, ke-2, dst.)
-        const labels = cumulativeProgress.map((_, index) => `Minggu ${index + 1}`);
+        // Labels (Minggu ke-0, ke-1, ke-2, dst.)
+        const labels = cumulativeProgress.map((_, index) => `Minggu ${index}`);
 
         // Konfigurasi Chart.js
         const ctx = document.getElementById('progressChart').getContext('2d');
@@ -88,5 +78,3 @@
             }
         });
     </script>
-</body>
-</html>
