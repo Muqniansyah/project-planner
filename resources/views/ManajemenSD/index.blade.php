@@ -80,7 +80,13 @@
                                             </svg>
                                         </a>
                                     </td>
-                                    <td class="px-4 py-2 text-gray-700">{{ $resource->status }}</td>
+                                    <td class="px-4 py-2 text-gray-700">
+                                        @if($resource->status === 'Available')
+                                            <span class="px-2 py-1 bg-green-100 text-green-700 rounded">Available</span>
+                                        @else
+                                            <span class="px-2 py-1 bg-red-100 text-red-700 rounded">Not Available</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -98,7 +104,7 @@
                     <h5 class="text-lg font-semibold">Alokasi Sumber Daya</h5>
                 </header>
                 <div class="p-4">
-                    <form action="{{ route('ManajemenSD.storeAllocation') }}" method="POST">
+                    <form action="{{ route('ManajemenSD.storeAllocation') }}" method="POST" onsubmit="return validateForm()">
                         @csrf
                         <!-- Pilih Sumber Daya -->
                         <div class="mb-4">
@@ -110,11 +116,13 @@
                                 required onchange="updateResourceInfo()">
                                 <option value="">Pilih Sumber Daya</option>
                                 @foreach ($resources as $resource)
-                                    <option value="{{ $resource->id }}" 
-                                            data-quantity="{{ $resource->quantity }}" 
-                                            data-type="{{ $resource->type }}">
-                                        {{ $resource->name }}
-                                    </option>
+                                    @if ($resource->status === 'Available')
+                                        <option value="{{ $resource->id }}" 
+                                                data-quantity="{{ $resource->quantity }}" 
+                                                data-type="{{ $resource->type }}">
+                                            {{ $resource->name }}
+                                        </option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -270,6 +278,18 @@
             // Aktifkan atau tetap disabled
             document.getElementById('quantity').disabled = true;
             document.getElementById('jenis').disabled = true;
+        }
+
+        function validateForm() {
+            const sumberDayaDropdown = document.getElementById('sumber_daya_id');
+            const selectedOption = sumberDayaDropdown.options[sumberDayaDropdown.selectedIndex];
+
+            if (!selectedOption || selectedOption.getAttribute('data-status') === 'Not Available') {
+                alert('Sumber daya yang dipilih tidak tersedia.');
+                return false;
+            }
+
+            return true;
         }
     </script>
 </x-app-layout>

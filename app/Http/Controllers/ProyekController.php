@@ -33,15 +33,39 @@ class ProyekController extends Controller
         return redirect()->route('dashboard')->with('success', 'Proyek berhasil dibuat!');
     }
 
-    public function dashboard() {
-        // Menambahkan pagination untuk setiap status proyek
-        $pendingProjects = Project::where('status', 'Pending')->paginate(2, ['*'], 'pendingPage');
-        $inProgressProjects = Project::where('status', 'In Progress')->paginate(2, ['*'], 'inProgressPage');
-        $completedProjects = Project::where('status', 'Completed')->paginate(2, ['*'], 'completedPage');
-        
-
+    public function dashboard(Request $request) {
+        // Ambil kata kunci pencarian dari request
+        $search = $request->get('search');
+    
+        // Menambahkan pagination dan pencarian untuk setiap status proyek
+        $pendingProjects = Project::where('status', 'Pending')
+                                ->where(function ($query) use ($search) {
+                                    if ($search) {
+                                        $query->where('name', 'like', '%' . $search . '%')
+                                              ->orWhere('description', 'like', '%' . $search . '%');
+                                    }
+                                })
+                                ->paginate(2, ['*'], 'pendingPage');
+    
+        $inProgressProjects = Project::where('status', 'In Progress')
+                                    ->where(function ($query) use ($search) {
+                                        if ($search) {
+                                            $query->where('name', 'like', '%' . $search . '%')
+                                                  ->orWhere('description', 'like', '%' . $search . '%');
+                                        }
+                                    })
+                                    ->paginate(2, ['*'], 'inProgressPage');
+    
+        $completedProjects = Project::where('status', 'Completed')
+                                   ->where(function ($query) use ($search) {
+                                       if ($search) {
+                                           $query->where('name', 'like', '%' . $search . '%')
+                                                 ->orWhere('description', 'like', '%' . $search . '%');
+                                       }
+                                   })
+                                   ->paginate(2, ['*'], 'completedPage');
+    
         return view('dashboard', compact('pendingProjects', 'inProgressProjects', 'completedProjects'));
-
     }
 
 

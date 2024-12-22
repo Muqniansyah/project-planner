@@ -13,15 +13,11 @@ return new class extends Migration
     {
         Schema::create('sumber_dayas', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->unsignedBigInteger('project_id')->nullable(); // Foreign key ke tabel projects
             $table->string('name', 255); // Nama sumber daya
             $table->string('type', 255); // Jenis sumber daya
             $table->integer('quantity'); // Kuantitas sumber daya
-            $table->string('status')->default('available'); // Status default "available"
+            $table->enum('status', ['Available', 'Not Available'])->default('Available'); // Status dengan default "Available"
             $table->timestamps(); // created_at dan updated_at
-
-            // Menambahkan foreign key ke kolom project_id
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 

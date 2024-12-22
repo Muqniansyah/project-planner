@@ -16,6 +16,25 @@
         </div>
     @endif
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <!-- Pencarian -->
+        <div class="mb-6 flex items-center space-x-4">
+            <form method="GET" action="{{ route('dashboard') }}" class="w-full flex items-center space-x-4">
+                <input 
+                    type="text" 
+                    name="search" 
+                    placeholder="Cari Proyek..." 
+                    value="{{ request('search') }}" 
+                    class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                >
+                <button 
+                    type="submit" 
+                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                    Cari
+                </button>
+            </form>
+        </div>
+
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <!-- Pending Section -->
             <div class="p-6 bg-white rounded-lg shadow">
@@ -32,6 +51,7 @@
                             <h3 class="font-semibold text-yellow-700 text-md">{{ $project->name }}</h3>
                             <p class="mt-2 text-sm text-yellow-600">Deskripsi: {{ $project->description }}</p>
                             <p class="mt-2 text-sm text-yellow-600">Anggaran: Rp.{{ number_format($project->anggaran, 2) }}</p>
+                            <p class="mt-2 text-sm text-yellow-600">{{ $project->start_date }} - {{ $project->end_date }}</p>
                             <p class="mt-2 text-xs text-yellow-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->
@@ -59,7 +79,7 @@
                 </div>
 
                 <!-- Pagination Links -->
-                <div class="mt-6">
+                <div class="mt-6 flex justify-center">
                     {{ $pendingProjects->appends(request()->query())->links() }}
                 </div>
             </div>
@@ -79,6 +99,7 @@
                             <h3 class="font-semibold text-blue-700 text-md">{{ $project->name }}</h3>
                             <p class="mt-2 text-sm text-blue-600">Deskripsi: {{ $project->description }}</p>
                             <p class="mt-2 text-sm text-blue-600">Anggaran: Rp.{{ number_format($project->anggaran, 2) }}</p>
+                            <p class="mt-2 text-sm text-blue-600">{{ $project->start_date }} - {{ $project->end_date }}</p>
                             <p class="mt-2 text-xs text-blue-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->
@@ -113,7 +134,7 @@
                 </div>
 
                 <!-- Pagination Links -->
-                <div class="mt-6">
+                <div class="mt-6 flex justify-center">
                 {{ $inProgressProjects->links() }}
                 </div>
             </div>
@@ -133,6 +154,7 @@
                             <h3 class="font-semibold text-green-700 text-md">{{ $project->name }}</h3>
                             <p class="mt-2 text-sm text-green-600">Deskripsi: {{ $project->description }}</p>
                             <p class="mt-2 text-sm text-green-600">Anggaran: Rp.{{ number_format($project->anggaran, 2) }}</p>
+                            <p class="mt-2 text-sm text-green-600">{{ $project->start_date }} - {{ $project->end_date }}</p>
                             <p class="mt-2 text-xs text-green-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->
@@ -160,7 +182,7 @@
                 </div>
 
                 <!-- Pagination Links -->
-                <div class="mt-6">
+                <div class="mt-6 flex justify-center">
                     {{ $completedProjects->appends(request()->query())->links() }}
                 </div>
             </div>

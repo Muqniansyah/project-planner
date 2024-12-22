@@ -98,18 +98,26 @@ class ManajemenSDController extends Controller
             'project_id' => 'required|exists:projects,id',
             'sumber_daya_id' => 'required|exists:sumber_dayas,id',
         ]);
-    
+
         // Ambil data sumber daya
         $resource = SumberDaya::findOrFail($request->sumber_daya_id);
-    
-        // Gunakan nilai dari database
+
+        // Pastikan sumber daya masih available
+        if ($resource->status !== 'Available') {
+            return redirect()->back()->with('error', 'Sumber Daya tidak tersedia untuk dialokasikan.');
+        }
+
+        // Lakukan alokasi
         ProjectSumberDaya::create([
             'project_id' => $request->project_id,
             'sumber_daya_id' => $resource->id,
             'quantity' => $resource->quantity,
             'jenis' => $resource->type,
         ]);
-    
+
+        // Ubah status sumber daya menjadi Not Available
+        $resource->update(['status' => 'Not Available']);
+
         return redirect()->route('ManajemenSD.view', ['id' => $request->project_id])
             ->with('success', 'Sumber Daya berhasil dialokasikan ke proyek!');
     }
