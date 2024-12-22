@@ -51,7 +51,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-4">
+    <footer class="py-4 text-white bg-gray-800">
         <div class="container mx-auto text-center">
             <p>&copy; {{ date('Y') }} Project Planner. All rights reserved.</p>
         </div>
