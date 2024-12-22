@@ -1,15 +1,11 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            Edit Proyek
-        </h2>
-    </x-slot>
+@extends('proyek.detail')
 
+@section('content')
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <section class="mb-6 bg-white rounded-lg shadow-md">
                 <header class="p-4 text-white bg-blue-600 rounded-t-lg">
-                    <h5 class="text-lg font-semibold">Edit Proyek</h5>
+                    <h5 class="text-lg font-semibold">Edit Proyek {{ $project->name }}</h5>
                 </header>
                 <div class="p-4">
                     <form action="{{ route('proyek.update', $project->id) }}" method="POST">
@@ -39,4 +35,4 @@
             </section>
         </div>
     </div>
-</x-app-layout>
+@endsection

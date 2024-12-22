@@ -6,6 +6,7 @@ use App\Models\Link;
 use App\Models\Project;
 use App\Models\ProjectDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class ProjectDetailController extends Controller
@@ -13,65 +14,84 @@ class ProjectDetailController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index(Project $project)
     {
-
-        // Tanggal mulai proyek (statis: 5 Desember 2024)
+        // Tanggal mulai proyek dan akhir proyek
         $projectStartDate = strtotime($project->start_date);
-        $projectEndDate = strtotime($project->end_date); // Contoh: Proyek berjalan 3 bulan
+        $projectEndDate = strtotime($project->end_date);
 
         // Total minggu proyek
         $totalWeeks = ceil(($projectEndDate - $projectStartDate) / (7 * 86400));
 
-        // Ambil semua task dari database
+        // Ambil semua task berdasarkan project ID
         $tasks = ProjectDetail::where('project_id', $project->id)->get();
 
-        // Buat array untuk progres kumulatif per minggu
-        $weeklyProgress = array_fill(1, $totalWeeks, 0);
+        // Inisialisasi progres mingguan
+        $weeklyProgress = array_fill(0, $totalWeeks, 0); // Nilai awal 0 untuk semua minggu
 
-        foreach ($tasks as $task) {
-            $startDate = strtotime($task->start_date);
-            $durationInDays = $task->duration;
-            $endDate = $startDate + ($durationInDays * 86400);
+        // Iterasi melalui setiap minggu
+        for ($week = 0; $week < $totalWeeks; $week++) {
+            $weekStartDate = $projectStartDate + ($week * 7 * 86400);
+            $weekEndDate = $weekStartDate + (7 * 86400) - 1;
 
-            // Hitung minggu mulai dan selesai (berdasarkan proyek)
-            $startWeek = ceil(($startDate - $projectStartDate) / (7 * 86400)) + 1;
-            $endWeek = ceil(($endDate - $projectStartDate) / (7 * 86400)) + 1;
+            $progressThisWeek = 0; // Total progres minggu ini
+            $tasksInWeek = 0;     // Jumlah task aktif minggu ini
 
-            // Pastikan minggu dalam rentang proyek
-            $startWeek = max(1, $startWeek);
-            $endWeek = min($totalWeeks, $endWeek);
+            // Iterasi setiap task
+            foreach ($tasks as $task) {
+                $taskStartDate = strtotime($task->start_date);
+                $taskEndDate = $taskStartDate + ($task->duration * 86400);
 
-            // Hitung progres harian
-            $progressPerDay = $task->progress / $durationInDays;
+                // Cek apakah task ini aktif dalam minggu ini
+                if ($taskEndDate >= $weekStartDate && $taskStartDate <= $weekEndDate) {
+                    $tasksInWeek++; // Hitung task yang aktif minggu ini
 
-            // Distribusikan progres ke setiap minggu
-            for ($week = $startWeek; $week <= $endWeek; $week++) {
-                // Hitung hari efektif di minggu ini
-                $weekStartDate = $projectStartDate + (($week - 1) * 7 * 86400);
-                $weekEndDate = $weekStartDate + (6 * 86400);
+                    // Hitung progres task dalam skala 0–1
+                    $progress = $task->progress / 100;
 
-                $effectiveStartDate = max($startDate, $weekStartDate);
-                $effectiveEndDate = min($endDate, $weekEndDate);
+                    // Jika task dimulai sebelum minggu ini, hanya hitung bagian minggu ini
+                    if ($taskStartDate < $weekStartDate) {
+                        $overlapDays = min($taskEndDate, $weekEndDate) - $weekStartDate + 1;
+                    } else {
+                        $overlapDays = min($taskEndDate, $weekEndDate) - $taskStartDate + 1;
+                    }
 
-                $daysInWeek = max(0, ($effectiveEndDate - $effectiveStartDate) / 86400 + 1);
-
-                // Tambahkan progres ke minggu ini
-                $weeklyProgress[$week] += $progressPerDay * $daysInWeek;
+                    $progressThisWeek += ($progress * ($overlapDays / ($task->duration * 86400)));
+                }
             }
+
+            // Rata-rata progres minggu ini (dibagi total task dalam proyek, termasuk task yang belum aktif)
+            $weeklyProgress[$week] = $tasks->count() > 0 ? ($progressThisWeek / $tasks->count()) : 0;
         }
 
-        // Hitung progres kumulatif per minggu
+        // Hitung progres kumulatif mingguan
         $cumulativeProgress = [];
-        $totalProgress = 0;
+        $totalCumulativeProgress = 0;
 
-        foreach ($weeklyProgress as $progress) {
-            $totalProgress += $progress;
-            $cumulativeProgress[] = min(100, $totalProgress * 100); // Maksimal 100%
+        foreach ($weeklyProgress as $week => $progress) {
+            $totalCumulativeProgress += $progress;
+            $cumulativeProgress[$week] = min(1, $totalCumulativeProgress); // Batasi maksimal 1 (100%)
         }
 
-        return view('proyek.detail', compact('project', 'tasks', 'cumulativeProgress', 'projectStartDate', 'totalWeeks'));
+        // Konversi progres kumulatif ke persen untuk ditampilkan
+        $cumulativeProgressPercentage = array_map(fn($value) => $value * 10000, $cumulativeProgress);
+
+        // Log untuk debugging
+        Log::info('Weekly progress calculation', ['weekly_progress' => $cumulativeProgressPercentage]);
+
+        return view('proyek.detail', compact('project', 'tasks', 'cumulativeProgressPercentage', 'projectStartDate', 'totalWeeks'));
     }
+
+
+
+
+
+
+
+
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -141,6 +161,14 @@ class ProjectDetailController extends Controller
         $task->duration = $request->duration;
         $task->progress = $request->has("progress") ? $request->progress : 0;
         $task->parent = $request->parent;
+
+        if($task->progress == 1)
+        {
+            $task->status = "Completed";
+        } elseif($task->progress > 0)
+        {
+            $task->status = "In Progress";
+        }
 
         $task->save();
 

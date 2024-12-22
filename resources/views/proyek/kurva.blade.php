@@ -1,60 +1,80 @@
- <canvas id="progressWeeklyChart" width="800" height="400"></canvas>
+<!-- Grafik Progres -->
+    <div style="width: 80%; margin: auto;">
+        <canvas id="progressChart"></canvas>
+    </div>
 
-<script>
-    // Data dari controller
-    const cumulativeProgress = @json($cumulativeProgress);
-    const totalWeeks = {{ $totalWeeks }};
-    const projectStartDate = new Date({{ $projectStartDate * 1000 }}); // UNIX timestamp
+    <!-- Tabel Progres Mingguan -->
+    <table border="1" style="width: 80%; margin: auto; text-align: center; margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>Minggu</th>
+                <th>Progres Kumulatif (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($cumulativeProgressPercentage as $week => $progress)
+                <tr>
+                    <td>{{ $week + 1 }}</td>
+                    <td>{{ number_format($progress, 2) }}%</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-    // Generate label minggu
-    const labels = Array.from({
-        length: totalWeeks
-    }, (_, index) => {
-        const startOfWeek = new Date(projectStartDate.getTime() + index * 7 * 86400 * 1000);
-        const endOfWeek = new Date(startOfWeek.getTime() + 6 * 86400 * 1000);
-        return `${startOfWeek.getDate()}-${startOfWeek.getMonth() + 1} s/d ${endOfWeek.getDate()}-${endOfWeek.getMonth() + 1}`;
-    });
+    <script>
+        // Data dari server (Blade Laravel)
+        const cumulativeProgress = [0, ...@json($cumulativeProgressPercentage)];
 
-    // Konfigurasi Chart.js
-    const ctx = document.getElementById('progressWeeklyChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Persentase Penyelesaian (%)',
-                data: cumulativeProgress,
-                borderColor: 'blue',
-                backgroundColor: 'rgba(0, 0, 255, 0.2)',
-                fill: true,
-                pointRadius: 3,
-                tension: 0.3,
-            }],
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Progress Timeline - Per Minggu',
-                },
+        // Labels (Minggu ke-0, ke-1, ke-2, dst.)
+        const labels = cumulativeProgress.map((_, index) => `Minggu ${index}`);
+
+        // Konfigurasi Chart.js
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Progres Kumulatif (%)',
+                    data: cumulativeProgress,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    title: {
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
                         display: true,
-                        text: 'Persentase Penyelesaian (%)',
+                        position: 'top'
                     },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.raw.toFixed(2)}%`;
+                            }
+                        }
+                    }
                 },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Minggu',
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Progres (%)'
+                        }
                     },
-                },
-            },
-        },
-    });
-</script>
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Minggu'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
