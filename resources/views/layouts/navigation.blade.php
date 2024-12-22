@@ -176,12 +176,11 @@
             <div class="px-2 pt-2 pb-3 space-y-1">
                 <a href="#" class="block px-3 py-2 text-base font-medium text-white bg-gray-900 rounded-md"
                     aria-current="page">Dashboard</a>
-                <a href="#"
-                    class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Team</a>
-                <a href="#"
+                <a href="{{ route('proyek.index') }}"
                     class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Projects</a>
-                <a href="#"
-                    class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Calendar</a>
+                <a href="{{ route('ManajemenSD.index') }}"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Resource
+                    Management</a>
             </div>
         </div>
     </nav>
