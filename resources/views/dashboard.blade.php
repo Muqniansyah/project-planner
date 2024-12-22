@@ -17,8 +17,8 @@
     @endif
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <!-- Pencarian -->
-        <div class="mb-6 flex items-center space-x-4">
-            <form method="GET" action="{{ route('dashboard') }}" class="w-full flex items-center space-x-4">
+        <div class="flex items-center mb-6 space-x-4">
+            <form method="GET" action="{{ route('dashboard') }}" class="flex items-center w-full space-x-4">
                 <input 
                     type="text" 
                     name="search" 
@@ -28,7 +28,7 @@
                 >
                 <button 
                     type="submit" 
-                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
                 >
                     Cari
                 </button>
@@ -55,20 +55,20 @@
                             <p class="mt-2 text-xs text-yellow-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->
-                            <div class="flex justify-end mt-4 space-x-2 relative z-10">
+                            <div class="relative z-10 flex justify-end mt-4 space-x-2">
                                 <a href="{{ route('projects.pdf', $project->id) }}" 
-                                    class="px-4 py-2 text-red text-red-500 rounded-lg hover:text-red-600 flex items-center justify-center">
+                                    class="flex items-center justify-center px-4 py-2 text-red-500 rounded-lg text-red hover:text-red-600">
                                     <span class="material-symbols-outlined">picture_as_pdf</span>
                                 </a>
                                 <a href="{{ route('proyekdetail.index', $project->id) }}"
                                     class="text-green-500 hover:text-green-700">
-                                    <i class="bi bi-info-circle text-lg"></i>
+                                    <i class="text-lg bi bi-info-circle"></i>
                                 </a>
                                 <form action="{{ route('proyek.updateStatus', $project->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="text-blue-500 hover:text-blue-700">
-                                        <i class="bi bi-arrow-right-circle text-lg"></i>
+                                    <button type="submit" class="text-blue-500 hover:text-blue-700" title="Move to In Progress">
+                                        <i class="text-lg bi bi-arrow-right-circle"></i>
                                     </button>
                                 </form>
                             </div>
@@ -79,7 +79,7 @@
                 </div>
 
                 <!-- Pagination Links -->
-                <div class="mt-6 flex justify-center">
+                <div class="flex justify-center mt-6">
                     {{ $pendingProjects->appends(request()->query())->links() }}
                 </div>
             </div>
@@ -103,27 +103,27 @@
                             <p class="mt-2 text-xs text-blue-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->
-                            <div class="flex justify-end mt-4 space-x-2 relative z-10">
-                                <a href="{{ route('projects.pdf', $project->id) }}" 
-                                    class="px-4 py-2 text-red text-red-500 rounded-lg hover:text-red-600 flex items-center justify-center">
+                            <div class="relative z-10 flex justify-end mt-4 space-x-2" >
+                                <button type="button" onclick="window.location='{{ route('projects.pdf', $project->id) }}'" title="Export PDF"
+                                    class="flex items-center justify-center px-4 py-2 text-red-500 rounded-lg text-red hover:text-red-600">
                                     <span class="material-symbols-outlined">picture_as_pdf</span>
-                                </a>
-                                <a href="{{ route('proyekdetail.index', $project->id) }}"
+                                </button>
+                                <button type="button" onclick="window.location='{{ route('proyekdetail.index', $project->id) }}'" title="Detail Proyek"
                                     class="text-green-500 hover:text-green-700">
-                                    <i class="bi bi-info-circle text-lg"></i>
-                                </a>
+                                    <i class="text-lg bi bi-info-circle"></i>
+                                </button>
                                 <form action="{{ route('proyek.undo', $project->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="text-gray-500 hover:text-gray-700">
-                                        <i class="bi bi-arrow-counterclockwise text-lg"></i>
+                                    <button type="submit" class="text-gray-500 hover:text-gray-700" title="Move to Pending">
+                                        <i class="text-lg bi bi-arrow-counterclockwise"></i>
                                     </button>
                                 </form>
                                 <form action="{{ route('proyek.updateStatus', $project->id) }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="text-blue-500 hover:text-blue-700">
-                                        <i class="bi bi-arrow-right-circle text-lg"></i>
+                                    <button type="submit" class="text-blue-500 hover:text-blue-700" title="Move to Completed">
+                                        <i class="text-lg bi bi-arrow-right-circle"></i>
                                     </button>
                                 </form>
                             </div>
@@ -134,7 +134,7 @@
                 </div>
 
                 <!-- Pagination Links -->
-                <div class="mt-6 flex justify-center">
+                <div class="flex justify-center mt-6">
                 {{ $inProgressProjects->links() }}
                 </div>
             </div>
@@ -158,20 +158,20 @@
                             <p class="mt-2 text-xs text-green-500">Status: {{ $project->status }}</p>
 
                             <!-- Tombol -->
-                            <div class="flex justify-end mt-4 space-x-2 relative z-10">
+                            <div class="relative z-10 flex justify-end mt-4 space-x-2">
                                 <a href="{{ route('projects.pdf', $project->id) }}" 
-                                    class="px-4 py-2 text-red text-red-500 rounded-lg hover:text-red-600 flex items-center justify-center">
+                                    class="flex items-center justify-center px-4 py-2 text-red-500 rounded-lg text-red hover:text-red-600">
                                     <span class="material-symbols-outlined">picture_as_pdf</span>
                                 </a>
                                 <a href="{{ route('proyekdetail.index', $project->id) }}"
                                     class="text-green-500 hover:text-green-700">
-                                    <i class="bi bi-info-circle text-lg"></i>
+                                    <i class="text-lg bi bi-info-circle"></i>
                                 </a>
                                 <form action="{{ route('proyek.undo', $project->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="text-gray-500 hover:text-gray-700">
-                                        <i class="bi bi-arrow-counterclockwise text-lg"></i>
+                                    <button type="submit" class="text-gray-500 hover:text-gray-700" title="Move to In Progress">
+                                        <i class="text-lg bi bi-arrow-counterclockwise"></i>
                                     </button>
                                 </form>
                             </div>
@@ -182,7 +182,7 @@
                 </div>
 
                 <!-- Pagination Links -->
-                <div class="mt-6 flex justify-center">
+                <div class="flex justify-center mt-6">
                     {{ $completedProjects->appends(request()->query())->links() }}
                 </div>
             </div>

@@ -27,7 +27,7 @@
                 <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
                     <div class="flex items-center shrink-0">
                         <div class="logo">
-                            <i class="fas fa-tasks text-blue-500 text-2xl"></i>
+                            <i class="text-2xl text-blue-500 fas fa-tasks"></i>
                         </div>
                     </div>
                     <div class="hidden sm:flex sm:items-stretch sm:m-auto">
@@ -76,7 +76,7 @@
                             </div> --}}
 
                             <a href="{{ route('proyek.index') }}"
-                                class="px-3 py-2 text-sm font-medium {{ Request::is('proyek*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md">Project</a>
+                                class="px-3 py-2 text-sm font-medium {{ Request::is('proyek*') || Request::is('Laporan*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md">Project</a>
                             <a href="{{ route('ManajemenSD.index') }}"
                                 class="px-3 py-2 text-sm font-medium {{ Request::is('ManajemenSD*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md">Resource
                                 Management</a>
