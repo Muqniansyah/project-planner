@@ -12,12 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('laporans', function (Blueprint $table) {
-            $table->id(); // Primary key
-            $table->unsignedBigInteger('project_id'); // Foreign key to 'project' table
-            $table->string('title', 255); // Title of the report
-            $table->unsignedBigInteger('generated_by')->nullable(); // Foreign key to 'user' table
-            $table->string('file_path', 255)->nullable(); // Path to the report file
-            $table->timestamps(); // created_at and updated_at columns
+            $table->id();
+            $table->string('author'); // Nama pembuat laporan
+            $table->date('report_date'); // Tanggal laporan
+            $table->string('title'); // Judul laporan
+            $table->text('description'); // Deskripsi laporan
+            $table->unsignedBigInteger('project_id')->nullable(); // Foreign key ke 'projects'
+            $table->unsignedBigInteger('generated_by')->nullable(); // Foreign key ke 'users'
+            $table->string('file_path', 255)->nullable(); // Path file laporan
+            $table->timestamps(); // Kolom created_at dan updated_at
 
             // Foreign key constraints
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
