@@ -34,4 +34,10 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    // pengguna yang terlibat dalam proyek(notifikasi)
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

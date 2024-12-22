@@ -84,16 +84,58 @@
                     </div>
                 </div>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <button type="button"
-                        class="relative p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        <span class="absolute -inset-1.5"></span>
-                        <span class="sr-only">View notifications</span>
-                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" aria-hidden="true" data-slot="icon">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                        </svg>
-                    </button>
+                    <div class="relative">
+                        <button type="button" id="notification-menu-button"
+                            class="relative p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                            </svg>
+                            <!-- Badge untuk jumlah notifikasi -->
+                            @if(isset($notifications) && $notifications->isNotEmpty())
+                            <span class="absolute top-0 right-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full flex items-center justify-center">
+                                {{ $notifications->count() }}
+                            </span>
+                            @endif
+                        </button>
+                        <div id="notification-menu"
+                            class="absolute right-0 z-10 hidden w-64 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none">
+                            <div class="py-2 bg-white rounded-lg shadow-lg">
+                                <!-- Header -->
+                                <div class="px-4 py-2 border-b bg-gray-100 rounded-t-lg">
+                                    <h3 class="text-sm font-semibold text-gray-700">View Notifications</h3>
+                                </div>
+                                <hr>
+                                <!-- Notifications -->
+                                <div class="max-h-64 overflow-y-auto">
+                                    @if(isset($notifications) && $notifications->isNotEmpty())
+                                    @foreach($notifications as $notification)
+                                    <div class="px-4 py-3 text-sm hover:bg-gray-50 border-b last:border-none">
+                                        <div>
+                                            <h4 class="font-semibold text-gray-800">{{ $notification->data['title'] }}</h4>
+                                            <p class="text-gray-600">{{ $notification->data['message'] }}</p>
+                                        </div>
+                                        <div class="mt-2 flex items-center justify-between">
+                                            @if(!empty($notification->data['url']))
+                                            <a href="{{ $notification->data['url'] }}" class="text-blue-500 text-sm hover:underline">Lihat detail</a>
+                                            @endif
+                                            <small class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</small>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                    @else
+                                    <p class="px-4 py-3 text-sm text-gray-600 text-center">Tidak ada notifikasi</p>
+                                    @endif
+                                </div>
+                                <!-- Footer -->
+                                <div class="px-4 py-2 bg-gray-100 border-t rounded-b-lg">
+                                    <button class="w-full px-4 py-2 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        Tandai Semua Dibaca
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Profile dropdown -->
                     <div class="relative ml-3">
@@ -176,5 +218,21 @@
         // Event Listeners
         userMenuButton.addEventListener('click', toggleUserMenu);
         mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+        // notification
+        const notificationMenuButton = document.getElementById('notification-menu-button');
+        const notificationMenu = document.getElementById('notification-menu');
+
+        // Toggle dropdown menu
+        notificationMenuButton.addEventListener('click', () => {
+            notificationMenu.classList.toggle('hidden');
+        });
+
+        // Close menu jika klik di luar
+        document.addEventListener('click', (event) => {
+            if (!notificationMenu.contains(event.target) && !notificationMenuButton.contains(event.target)) {
+                notificationMenu.classList.add('hidden');
+            }
+        });
     </script>
 

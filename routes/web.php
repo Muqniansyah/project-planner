@@ -7,6 +7,7 @@ use App\Http\Controllers\PendjadwalanController;
 use App\Http\Controllers\ManajemenSDController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProjectDetailController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 Route::get('/', function () {
@@ -65,6 +66,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan/share/{id}', [LaporanController::class, 'shareReport'])->name('Laporan.share');
     Route::post('/laporan/share/{id}', [LaporanController::class, 'shareReport'])->name('Laporan.share');
 
+    // notifikasi
+    Route::put('/setting/{settings}', [SettingController::class, 'update'])->name('settings.update');
+    Route::post('/notifications/read/{id}', [SettingController::class, 'read'])->name('settings.read');
+    Route::get('/notify-due-projects', [SettingController::class, 'notifyDueProjects']);
 
 });
 
