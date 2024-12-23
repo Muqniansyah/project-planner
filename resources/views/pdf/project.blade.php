@@ -33,6 +33,8 @@
         <div class="detail-item"><strong>Nama Proyek:</strong> {{ $project->name }}</div>
         <div class="detail-item"><strong>Deskripsi:</strong> {{ $project->description }}</div>
         <div class="detail-item"><strong>Anggaran:</strong> ${{ number_format($project->anggaran, 2) }}</div>
+        <div class="detail-item"><strong>Start Date:</strong> {{ $project->start_date }}</div>
+        <div class="detail-item"><strong>End Date:</strong> {{ $project->end_date }}</div>
         <div class="detail-item"><strong>Status:</strong> {{ $project->status }}</div>
     </div>
 </body>
