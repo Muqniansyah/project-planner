@@ -52,7 +52,7 @@
                             </svg>
                             <!-- Badge untuk jumlah notifikasi -->
                             @if(isset($notifications) && $notifications->isNotEmpty())
-                            <span class="absolute top-0 right-0 w-4 h-4 text-xs text-white bg-red-500 rounded-full flex items-center justify-center">
+                            <span class="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full">
                                 {{ $notifications->count() }}
                             </span>
                             @endif
@@ -61,29 +61,29 @@
                             class="absolute right-0 z-10 hidden w-64 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none">
                             <div class="py-2 bg-white rounded-lg shadow-lg">
                                 <!-- Header -->
-                                <div class="px-4 py-2 border-b bg-gray-100 rounded-t-lg">
+                                <div class="px-4 py-2 bg-gray-100 border-b rounded-t-lg">
                                     <h3 class="text-sm font-semibold text-gray-700">View Notifications</h3>
                                 </div>
                                 <hr>
                                 <!-- Notifications -->
-                                <div class="max-h-64 overflow-y-auto">
+                                <div class="overflow-y-auto max-h-64">
                                     @if(isset($notifications) && $notifications->isNotEmpty())
                                     @foreach($notifications as $notification)
-                                    <div class="px-4 py-3 text-sm hover:bg-gray-50 border-b last:border-none">
+                                    <div class="px-4 py-3 text-sm border-b hover:bg-gray-50 last:border-none">
                                         <div>
                                             <h4 class="font-semibold text-gray-800">{{ $notification->data['title'] }}</h4>
                                             <p class="text-gray-600">{{ $notification->data['message'] }}</p>
                                         </div>
-                                        <div class="mt-2 flex items-center justify-between">
+                                        <div class="flex items-center justify-between mt-2">
                                             @if(!empty($notification->data['url']))
-                                            <a href="{{ $notification->data['url'] }}" class="text-blue-500 text-sm hover:underline">Lihat detail</a>
+                                            <a href="{{ $notification->data['url'] }}" class="text-sm text-blue-500 hover:underline">Lihat detail</a>
                                             @endif
                                             <small class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</small>
                                         </div>
                                     </div>
                                     @endforeach
                                     @else
-                                    <p class="px-4 py-3 text-sm text-gray-600 text-center">Tidak ada notifikasi</p>
+                                    <p class="px-4 py-3 text-sm text-center text-gray-600">Tidak ada notifikasi</p>
                                     @endif
                                 </div>
                                 <!-- Footer -->
@@ -105,7 +105,7 @@
                                 <span class="absolute -inset-1.5"></span>
                                 <span class="sr-only">Open user menu</span>
                                 <img class="w-8 h-8 rounded-full"
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    src="{{ Auth::user()->photo == null ? asset('images/user/default.png') : asset('storage/' . Auth::user()->photo) }}"
                                     alt="">
                             </button>
                         </div>
