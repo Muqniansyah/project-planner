@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     // routing Laporan
     Route::get('/Laporan', [LaporanController::class,'index'])->name('Laporan.index');
     Route::post('/Laporan/store', [LaporanController::class, 'store'])->name('Laporan.store');
+    Route::get('/Laporan/{projectId}', [LaporanController::class, 'index'])->name('Laporan.index');
 
     //routing pdf
     Route::get('/projects/pdf/{id}', [ProyekController::class, 'generatePdf'])->name('projects.pdf');

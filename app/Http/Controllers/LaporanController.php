@@ -11,20 +11,25 @@ use App\Mail\LaporanMail;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use App\Models\Project;
 
 
 class LaporanController extends Controller
 {
     // Menampilkan Halaman Index dengan Data Laporan
-    public function index()
+    public function index($projectId = null): \Illuminate\View\View
     {
-        // Ambil semua data laporan
-        $laporans = Laporan::all();
-
-        // Kirim data ke view 'Laporan.index'
-        return view('Laporan.index', compact('laporans'));
+        // Jika $projectId diberikan, ambil data proyek terkait
+        $project = $projectId ? Project::findOrFail($projectId) : null;
+    
+        // Ambil data laporan berdasarkan projectId jika ada, atau semua laporan jika tidak ada
+        $laporans = $projectId ? Laporan::where('project_id', $projectId)->get() : Laporan::all();
+    
+        // Kirim data ke view
+        return view('Laporan.index', compact('project', 'laporans'));
     }
-
+    
+    
     // Menyimpan Data Laporan Baru
     public function store(Request $request)
     {
@@ -37,15 +42,16 @@ class LaporanController extends Controller
             'report_date' => 'required|date',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'project_id' => 'required|exists:projects,id',
         ]);
 
         // Simpan ke Database
         Laporan::create($request->all()); // Ini cukup
 
         // Redirect dengan Pesan Sukses
-        return redirect()->route('Laporan.index')->with('success', 'Laporan berhasil dibuat!');
-    }
-
+        return redirect()->route('Laporan.index', $request->project_id)
+                     ->with('success', 'Laporan berhasil ditambahkan.');
+        }
         // Method untuk mengunduh laporan sebagai PDF
     public function downloadPDF($id)
     {
@@ -84,7 +90,7 @@ public function shareReport(Request $request, $id)
     try {
         // Log: Menampilkan informasi email dan laporan
         Log::info('Mengirim email ke: ' . $request->email);
-        Log::info('Subject: Laporan Proyek - ' . $laporan->title);
+        Log::info('Subject: Laporan Proyek  ' . $laporan->title);
 
         // Kirim email
         Mail::to($request->email)->send(new LaporanMail($laporan));

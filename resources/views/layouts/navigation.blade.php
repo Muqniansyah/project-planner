@@ -34,47 +34,6 @@
                         <div class="flex space-x-4">
                             <a href="{{ route('dashboard') }}" class="px-3 py-2 text-sm font-medium  rounded-md {{ Request::is('dashboard*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}"
                                 aria-current="page">Dashboard</a>
-
-                            {{-- <div class="relative">
-                                <button type="button"
-                                    class="flex items-center px-3 py-1.5 font-medium {{ Request::is('Laporan*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md gap-x-1 text-sm/6"
-                                    data-dropdown-button>
-                                    Project Report
-                                    <svg class="flex-none text-gray-300 size-5" viewBox="0 0 20 20" fill="currentColor"
-                                        aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                                <div class="absolute z-10 hidden w-screen max-w-md mt-3 overflow-hidden bg-gray-800 shadow-lg -left-8 top-full rounded-3xl ring-1 ring-gray-900/5"
-                                    data-dropdown-menu>
-                                    <div class="p-4">
-                                        <div
-                                            class="relative flex items-center p-4 rounded-lg group gap-x-6 text-sm/6 hover:bg-gray-700">
-                                            <div
-                                                class="flex items-center justify-center flex-none rounded-lg size-11 ">
-                                                <svg class="text-white size-6 group-hover:text-indigo-600"
-                                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                                    stroke="currentColor" aria-hidden="true" data-slot="icon">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
-                                                </svg>
-                                            </div>
-                                            <div class="flex-auto">
-                                                <a href="{{ route('Laporan.index') }}"
-                                                    class="block font-semibold text-white">
-                                                    Laporan
-                                                    <span class="absolute inset-0"></span>
-                                                </a>
-                                                <p class="mt-1 text-gray-400">Your customers’ data will be safe and
-                                                    secure</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-
                             <a href="{{ route('proyek.index') }}"
                                 class="px-3 py-2 text-sm font-medium {{ Request::is('proyek*') || Request::is('Laporan*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md">Project</a>
                             <a href="{{ route('ManajemenSD.index') }}"

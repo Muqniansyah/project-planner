@@ -11,7 +11,7 @@ class Laporan extends Model
 
     protected $table = 'laporans'; // Nama tabel
 
-    protected $fillable = ['author', 'report_date', 'title' , 'description'];
+    protected $fillable = ['author', 'report_date', 'title' , 'description','project_id'];
     // protected $fillable = ['author', 'title' , 'contect','date',];
 
     /**
@@ -28,6 +28,14 @@ class Laporan extends Model
     public function generator()
     {
         return $this->belongsTo(User::class, 'generated_by');
+    }
+
+    /**
+     * Relasi tambahan untuk keperluan spesifik(laporan)
+     */
+    public function relatedProject()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
     }
 }
 
