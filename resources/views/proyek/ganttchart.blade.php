@@ -32,7 +32,7 @@
         #gantt_here {
             width: 100%;
             min-width: 600px;
-            height: 70vh; /* Adjust height based on viewport height */
+            height: 70vh;
             overflow: hidden;
         }
 
@@ -47,14 +47,12 @@
             overflow: hidden;
         }
 
-        /* Optional: Adjust Gantt chart width for small screens */
         @media (max-width: 767px) {
             #gantt_here {
-                height: 60vh; /* Less height on small screens */
+                height: 60vh;
             }
         }
 
-        /* Ensure horizontal scrolling for the task names */
         .gantt_task_cell {
             overflow-x: auto;
         }
@@ -91,16 +89,63 @@
             return action;
         });
 
+        // Tanggal awal dan akhir proyek
+        const projectStartDate = new Date("{{ $project->start_date }}"); // Contoh: "2024-01-01"
+        const projectEndDate = new Date("{{ $project->end_date }}"); // Contoh: "2024-12-31"
+
+        // Atur tampilan awal Gantt Chart dimulai dari tanggal proyek
+        gantt.config.start_date = projectStartDate;
+        gantt.config.end_date = projectEndDate;
+
+        // Validasi tanggal task dengan mempertahankan modal
+        gantt.attachEvent("onBeforeTaskAdd", function(id, task) {
+            if (task.start_date <= projectStartDate) {
+                alert("Task start date cannot be earlier than project start date!");
+                gantt.deleteTask(id);  // Hapus task yang sedang ditambahkan
+                return false; // Batalkan penambahan task ke Gantt Chart
+            }
+            if (task.end_date >= projectEndDate) {
+                alert("Task end date cannot be later than project end date!");
+                gantt.deleteTask(id);  // Hapus task yang sedang ditambahkan
+                return false; // Batalkan penambahan task ke Gantt Chart
+            }
+            return true; // Task valid, izinkan penambahan
+        });
+
+        gantt.attachEvent("onBeforeTaskUpdate", function(id, task) {
+            if (task.start_date <= projectStartDate) {
+                alert("Task start date cannot be earlier than project start date!");
+                gantt.deleteTask(id);  // Hapus task yang sedang diupdate
+                return false; // Batalkan update task
+            }
+            if (task.end_date >= projectEndDate) {
+                alert("Task end date cannot be later than project end date!");
+                gantt.deleteTask(id);  // Hapus task yang sedang diupdate
+                return false; // Batalkan update task
+            }
+            return true; // Task valid, izinkan update
+        });
+
+        // Set default value untuk tanggal task saat form dibuka
+        gantt.attachEvent("onLightbox", function(task_id) {
+            const task = gantt.getTask(task_id);
+            if (!task.start_date) {
+                task.start_date = new Date(projectStartDate); // Set default start_date
+                task.end_date = new Date(task.start_date.getTime() + 24 * 60 * 60 * 1000); // Tambah 1 hari
+            }
+            gantt.updateTask(task_id);
+        });
+
         // Penyesuaian ukuran Gantt Chart ketika jendela diubah
-        window.addEventListener("resize", function () {
+        window.addEventListener("resize", function() {
             gantt.render();
         });
 
         // Tambahkan style untuk horizontal scrolling
-        gantt.attachEvent("onRender", function () {
+        gantt.attachEvent("onRender", function() {
             const ganttContainer = document.getElementById("gantt_here");
             ganttContainer.style.overflowX = "auto";
-            ganttContainer.style.overflowY = "auto";  // Add vertical scroll to the Gantt chart container
+            ganttContainer.style.overflowY = "auto"; // Add vertical scroll to the Gantt chart container
         });
 
         // Mengatur skala waktu responsif berdasarkan lebar layar
@@ -108,24 +153,28 @@
             const width = window.innerWidth;
 
             if (width < 768) {
-                // Untuk layar kecil, gunakan skala waktu yang lebih besar
                 gantt.config.scale_unit = "day";
                 gantt.config.date_scale = "%d %M";
                 gantt.config.subscales = [];
             } else if (width < 1024) {
-                // Untuk layar sedang, gunakan skala mingguan
                 gantt.config.scale_unit = "week";
                 gantt.config.date_scale = "Week #%W";
-                gantt.config.subscales = [{ unit: "day", step: 1, date: "%D" }];
+                gantt.config.subscales = [{
+                    unit: "day",
+                    step: 1,
+                    date: "%D"
+                }];
             } else {
-                // Untuk layar besar, gunakan skala bulanan
                 gantt.config.scale_unit = "month";
                 gantt.config.date_scale = "%F, %Y";
-                gantt.config.subscales = [{ unit: "day", step: 1, date: "%d" }];
+                gantt.config.subscales = [{
+                    unit: "day",
+                    step: 1,
+                    date: "%d"
+                }];
             }
         };
 
-        // Terapkan konfigurasi skala waktu saat aplikasi dimuat dan ukuran layar berubah
         setScaleConfig();
         window.addEventListener("resize", () => {
             setScaleConfig();
