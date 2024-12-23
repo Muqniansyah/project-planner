@@ -20,16 +20,20 @@
         {{ Request::is('ManajemenSD*') ? 'rounded-full text-white bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 hover:bg-green-900' : 'text-green-700 border border-green-700 rounded-full hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300' }}">
             Sumber Daya
         </button>
-        <button type="button" onclick="window.location='{{ route('Laporan.index', $project->id) }}'"
-            class="px-4 py-2 text-sm font-medium text-center 
+        
+        @if (Auth::user()->role === 'manager')
+            <button type="button" onclick="window.location='{{ route('Laporan.index', $project->id) }}'"
+                class="px-4 py-2 text-sm font-medium text-center 
             {{ Request::is('Laporan*') ? 'rounded-full text-white bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 hover:bg-green-900' : 'text-green-700 border border-green-700 rounded-full hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300' }}">
-            Project Report
-        </button>
-        <button type="button" onclick="window.location='{{ route('proyek.edit', $project->id) }}'"
-            class="px-4 py-2 text-sm font-medium text-center 
+                Project Report
+            </button>
+            <button type="button" onclick="window.location='{{ route('proyek.edit', $project->id) }}'"
+                class="px-4 py-2 text-sm font-medium text-center 
         {{ Request::is('proyek/edit*') ? 'rounded-full text-white bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 hover:bg-green-900' : 'text-green-700 border border-green-700 rounded-full hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300' }}">
-            Settings
-        </button>
+                Settings
+            </button>
+        @endif
+        
     </div>
 
 
@@ -60,7 +64,7 @@
                 class="absolute right-0 z-10 hidden w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
                 role="menu" aria-orientation="vertical" aria-labelledby="task-menu-button" tabindex="-1">
                 <a href="?task=gantt"
-                    class="block px-4 py-2 text-sm  {{ ($task == 'gantt') || !isset($task) ? 'bg-gray-500 text-white' : 'hover:bg-gray-500 text-gray-700 hover:text-white' }}"
+                    class="block px-4 py-2 text-sm  {{ $task == 'gantt' || !isset($task) ? 'bg-gray-500 text-white' : 'hover:bg-gray-500 text-gray-700 hover:text-white' }}"
                     role="menuitem" tabindex="-1" id="task-menu-item-0">Gantt Chart</a>
                 <a href="?task=kurva"
                     class="block px-4 py-2 text-sm text-gray-700 {{ $task == 'kurva' ? 'bg-gray-500 text-white' : 'hover:bg-gray-500 text-gray-700 hover:text-white' }}"

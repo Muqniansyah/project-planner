@@ -23,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'jobdesk',
+        'photo',
     ];
 
     /**
@@ -47,4 +50,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Model User
+    public function sumberDaya()
+    {
+        return $this->belongsTo(SumberDaya::class, 'jobdesk');
+    }
+
+    public function project()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_user');
+    }
+
 }

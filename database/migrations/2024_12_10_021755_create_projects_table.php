@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('status')->default('Pending'); // Status default "Pending"
             $table->dateTime('start_date');
             $table->dateTime('end_date')->nullable();
+            $table->unsignedBigInteger('manager');
             $table->timestamps(); // created_at dan updated_at
+
+            $table->foreign('manager')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

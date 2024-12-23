@@ -24,7 +24,18 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'admin',
-                'jobdesk' => 'Admin',
+                'jobdesk' => null,
+                'photo' => null,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'id' => 2,
+                'name' => 'Manager',
+                'email' => 'manager@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'manager',
+                'jobdesk' => null,
                 'photo' => null,
                 'created_at' => now(),
                 'updated_at' => now()

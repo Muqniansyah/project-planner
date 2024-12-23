@@ -9,7 +9,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'anggaran', 'status', 'start_date', 'end_date'];
+    protected $fillable = ['name', 'description', 'anggaran', 'status', 'start_date', 'end_date', 'manager'];
 
     /**
      * Relasi ke model ProjectDetail
@@ -27,17 +27,18 @@ class Project extends Model
         return $this->hasMany(Laporan::class);
     }
 
-    /**
-     * Relasi ke model User (dibuat oleh)
-     */
-    public function creator()
+    public function manager()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'manager');
     }
 
-    // pengguna yang terlibat dalam proyek(notifikasi)
-    public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    public function sumberDaya()
+    {
+        return $this->hasMany(ProjectSumberDaya::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'project_user');
+    }
 }

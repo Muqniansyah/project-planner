@@ -24,4 +24,11 @@ class ProjectSumberDaya extends Model
         return $this->belongsTo(SumberDaya::class, 'sumber_daya_id');
     }
 
+    // Model SumberDaya
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+
 }

@@ -83,15 +83,6 @@ class ProjectDetailController extends Controller
         return view('proyek.detail', compact('project', 'tasks', 'cumulativeProgressPercentage', 'projectStartDate', 'totalWeeks'));
     }
 
-
-
-
-
-
-
-
-
-
     /**
      * Show the form for creating a new resource.
      */

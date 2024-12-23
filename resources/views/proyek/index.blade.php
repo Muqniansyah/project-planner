@@ -29,7 +29,7 @@
                                 </ul>
                             </div>
                         @endif
-                        
+
                         <label for="project-title" class="block mb-2 text-sm font-medium text-gray-700">Judul
                             Proyek</label>
                         <input type="text" id="project-title" name="name"
@@ -60,6 +60,16 @@
                         <input type="number" id="project-budget" name="anggaran"
                             class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Masukkan anggaran" required>
+
+                        <label for="manager" class="block mt-4 mb-2 text-sm font-medium text-gray-700">Manager
+                            Project</label>
+                        <select id="manager" name="manager"
+                            class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                            required>
+                            @foreach ($managers as $manager)
+                                <option value="{{ $manager->id }}">{{ $manager->name }}</option>
+                            @endforeach
+                        </select>
 
                         <button type="submit"
                             class="w-full px-4 py-2 mt-4 text-white bg-blue-600 rounded hover:bg-blue-700">Buat

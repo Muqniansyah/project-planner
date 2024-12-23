@@ -18,4 +18,14 @@ class SumberDaya extends Model
     {
         return $this->belongsTo(Project::class, 'project_id')->nullable();
     }
+
+    public function projectSumberDaya()
+    {
+        return $this->hasMany(ProjectSumberDaya::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'jobdesk');
+    }
 }

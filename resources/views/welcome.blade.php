@@ -148,7 +148,7 @@
   <div class="container">
     <!-- Logo -->
     <div class="logo">
-      <i class="fas fa-tasks fa-4x text-blue-500"></i>
+      <i class="text-blue-500 fas fa-tasks fa-4x"></i>
     </div>
 
 
@@ -165,7 +165,7 @@
     <!-- Buttons -->
     <div class="btn-group">
       <a href="{{ route('login') }}" class="btn btn-login">Log In</a>
-      <a href="{{ route('register') }}" class="btn btn-register">Register</a>
+      {{-- <a href="{{ route('register') }}" class="btn btn-register">Register</a> --}}
 
     </div>
 
