@@ -56,29 +56,6 @@
                             </div>
                         </div>
 
-                        <!-- Notifikasi -->
-                        <div class="mb-5">
-                            <p class="block mb-2 text-xl font-bold text-gray-900">Notifikasi</p>
-
-                            <div class="flex items-center mb-4">
-                                <input id="daily" type="checkbox" value="daily" name="notifikasi[]"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                <label for="daily" class="text-sm font-medium text-gray-900 ms-2">Harian</label>
-                            </div>
-
-                            <div class="flex items-center mb-4">
-                                <input id="weekly" type="checkbox" value="weekly" name="notifikasi[]"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                <label for="weekly" class="text-sm font-medium text-gray-900 ms-2">Mingguan</label>
-                            </div>
-
-                            <div class="flex items-center mb-4">
-                                <input id="monthly" type="checkbox" value="monthly" name="notifikasi[]"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                <label for="monthly" class="text-sm font-medium text-gray-900 ms-2">Bulanan</label>
-                            </div>
-                        </div>
-
                         <!-- Tombol Submit -->
                         <button type="submit"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5">
