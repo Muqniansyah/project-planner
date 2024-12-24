@@ -75,6 +75,7 @@
 
         gantt.init("gantt_here");
 
+        // Memuat data gantt
         gantt.load("/api/data/{{ $project->id }}");
 
         var dp = new gantt.dataProcessor("/api");
@@ -97,35 +98,6 @@
         gantt.config.start_date = projectStartDate;
         gantt.config.end_date = projectEndDate;
 
-        // Validasi tanggal task dengan mempertahankan modal
-        gantt.attachEvent("onBeforeTaskAdd", function(id, task) {
-            if (task.start_date <= projectStartDate) {
-                alert("Task start date cannot be earlier than project start date!");
-                gantt.deleteTask(id);  // Hapus task yang sedang ditambahkan
-                return false; // Batalkan penambahan task ke Gantt Chart
-            }
-            if (task.end_date >= projectEndDate) {
-                alert("Task end date cannot be later than project end date!");
-                gantt.deleteTask(id);  // Hapus task yang sedang ditambahkan
-                return false; // Batalkan penambahan task ke Gantt Chart
-            }
-            return true; // Task valid, izinkan penambahan
-        });
-
-        gantt.attachEvent("onBeforeTaskUpdate", function(id, task) {
-            if (task.start_date <= projectStartDate) {
-                alert("Task start date cannot be earlier than project start date!");
-                gantt.deleteTask(id);  // Hapus task yang sedang diupdate
-                return false; // Batalkan update task
-            }
-            if (task.end_date >= projectEndDate) {
-                alert("Task end date cannot be later than project end date!");
-                gantt.deleteTask(id);  // Hapus task yang sedang diupdate
-                return false; // Batalkan update task
-            }
-            return true; // Task valid, izinkan update
-        });
-
         // Set default value untuk tanggal task saat form dibuka
         gantt.attachEvent("onLightbox", function(task_id) {
             const task = gantt.getTask(task_id);
@@ -139,13 +111,6 @@
         // Penyesuaian ukuran Gantt Chart ketika jendela diubah
         window.addEventListener("resize", function() {
             gantt.render();
-        });
-
-        // Tambahkan style untuk horizontal scrolling
-        gantt.attachEvent("onRender", function() {
-            const ganttContainer = document.getElementById("gantt_here");
-            ganttContainer.style.overflowX = "auto";
-            ganttContainer.style.overflowY = "auto"; // Add vertical scroll to the Gantt chart container
         });
 
         // Mengatur skala waktu responsif berdasarkan lebar layar
@@ -180,6 +145,23 @@
             setScaleConfig();
             gantt.render();
         });
+
+        // Cek role user dan hanya biarkan user dengan role 'manager' yang bisa menambah task
+        const userRole = "{{ Auth::user()->role }}";  // Pastikan 'role' tersedia dalam data pengguna
+
+        if (userRole !== 'manager') {
+            gantt.config.readonly = true; // Membuat chart hanya bisa dibaca jika bukan manager
+        }
+
+        // Fungsi untuk mencegah penambahan task jika bukan manager
+        gantt.attachEvent("onBeforeTaskAdd", function(task) {
+            if (userRole !== 'manager') {
+                alert("Anda tidak memiliki hak untuk menambah task.");
+                return false; // Mencegah penambahan task
+            }
+            return true; // Memungkinkan penambahan task jika manager
+        });
+
     </script>
 </body>
 

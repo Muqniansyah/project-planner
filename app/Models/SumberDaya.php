@@ -16,12 +16,8 @@ class SumberDaya extends Model
      */
     public function project()
     {
-        return $this->belongsTo(Project::class, 'project_id')->nullable();
-    }
-
-    public function projectSumberDaya()
-    {
-        return $this->hasMany(ProjectSumberDaya::class);
+        return $this->belongsToMany(Project::class, 'project_sumber_dayas')
+                                ->withPivot('quantity');
     }
 
     public function users()

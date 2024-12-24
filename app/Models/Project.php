@@ -34,7 +34,8 @@ class Project extends Model
 
     public function sumberDaya()
     {
-        return $this->hasMany(ProjectSumberDaya::class);
+        return $this->belongsToMany(SumberDaya::class, 'project_sumber_dayas')
+                                    ->withPivot('quantity');
     }
 
     public function users()

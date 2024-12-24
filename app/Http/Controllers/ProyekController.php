@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\SumberDaya;
 use App\Models\User;
+use App\Notifications\UserAddedToProject;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ProyekController extends Controller
@@ -13,8 +16,9 @@ class ProyekController extends Controller
     public function index()
     {
         $managers = User::where('role', 'Manager')->get();
+        $project = Project::all();
 
-        return view('proyek.index', compact('managers'));
+        return view('proyek.index', compact('managers', 'project'));
     }
 
     public function store(Request $request)
@@ -28,7 +32,7 @@ class ProyekController extends Controller
             'manager' => 'required|exists:users,id',
         ]);
 
-        Project::create([
+        $project = Project::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'anggaran' => $request->input('anggaran'),
@@ -37,6 +41,10 @@ class ProyekController extends Controller
             'end_date' => $request->input('end_date'),
             'manager' => $request->input('manager'),
         ]);
+
+        $user = User::findOrFail($request->manager);
+
+        $user->notify(new UserAddedToProject($project, $user));
 
         return redirect()->route('dashboard')->with('success', 'Proyek berhasil dibuat!');
     }
@@ -105,6 +113,16 @@ class ProyekController extends Controller
                 })
                 ->paginate(2, ['*'], 'inProgressPage');
 
+            $approvalRequestProjects = Project::where('status', 'Approval Request')
+                ->where('manager', Auth::user()->id)
+                ->where(function ($query) use ($search) {
+                    if ($search) {
+                        $query->where('name', 'like', '%' . $search . '%')
+                            ->orWhere('description', 'like', '%' . $search . '%');
+                    }
+                })
+                ->paginate(2, ['*'], 'inProgressPage');
+
             $completedProjects = Project::where('status', 'Completed')
                 ->where('manager', Auth::user()->id)
                 ->where(function ($query) use ($search) {
@@ -121,25 +139,39 @@ class ProyekController extends Controller
             'pendingProjects',
             'inProgressProjects',
             'completedProjects',
+            'approvalRequestProjects'
         ));
     }
 
 
     public function updateStatus(Request $request, $id)
     {
-        // Validasi dan cari proyek berdasarkan ID
+        // Cari proyek berdasarkan ID
         $project = Project::findOrFail($id);
 
         // Perbarui status proyek
         if ($project->status === 'Pending') {
             $project->status = 'In Progress';
         } elseif ($project->status === 'In Progress') {
+            $project->status = "Approval Request";
+        } elseif ($project->status === 'Approval Request') {
             $project->status = 'Completed';
+
+            // Kembalikan sumber daya jenis "tenaga kerja" yang digunakan menjadi tersedia
+            foreach ($project->sumberDaya as $sumberDaya) {
+                // Hanya update jika jenis sumber daya adalah "tenaga kerja"
+                if ($sumberDaya->type === 'Tenaga Kerja') {
+                    // Tambahkan kembali jumlah sumber daya yang digunakan ke jumlah total
+                    $sumberDaya->quantity += $sumberDaya->pivot->quantity;
+                    $sumberDaya->status = 'Available';
+                    $sumberDaya->save();
+                }
+            }
         }
 
         $project->save();
 
-        return redirect()->route('dashboard')->with('success', 'Status berhasil dibuah!');
+        return redirect()->route('dashboard')->with('success', 'Status berhasil diubah!');
     }
 
     public function detail($id)
@@ -154,7 +186,7 @@ class ProyekController extends Controller
         $project = Project::findOrFail($id);
 
         // Perbarui status proyek secara dinamis
-        if ($project->status === 'Completed') {
+        if ($project->status === 'Approval Request') {
             $project->status = 'In Progress';
         } elseif ($project->status === 'In Progress') {
             $project->status = 'Pending';
@@ -185,6 +217,9 @@ class ProyekController extends Controller
         if (!$project) {
             abort(404, 'Proyek tidak ditemukan.');
         }
+
+        $project->start_date = Carbon::parse($project->start_date);
+        $project->end_date = Carbon::parse($project->end_date);
 
         // Kirim data proyek ke view edit
         return view('proyek.edit', compact('project'));

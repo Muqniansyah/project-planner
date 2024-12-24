@@ -38,7 +38,7 @@
             </div>
         </div>
 
-    <!-- Dashbord Manager & Karyawan -->
+        <!-- Dashbord Manager & Karyawan -->
     @else
         @if (session('success'))
             <div class="p-4 mb-4 text-green-700 bg-green-100 rounded">
@@ -67,7 +67,7 @@
                 </form>
             </div>
 
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-4">
                 <!-- Pending Section -->
                 <div class="p-6 bg-white rounded-lg shadow">
                     <h2 class="mb-4 text-lg font-semibold text-gray-700">Pending</h2>
@@ -83,8 +83,9 @@
                                 <p class="mt-2 text-sm text-yellow-600">Deskripsi: {{ $project->description }}</p>
                                 <p class="mt-2 text-sm text-yellow-600">Anggaran:
                                     Rp.{{ number_format($project->anggaran, 2) }}</p>
-                                <p class="mt-2 text-sm text-yellow-600">{{ $project->start_date }} -
-                                    {{ $project->end_date }}</p>
+                                <p class="mt-2 text-sm text-yellow-600">
+                                    {{ \Carbon\Carbon::parse($project->start_date)->format('Y-m-d') }} -
+                                    {{ \Carbon\Carbon::parse($project->end_date)->format('Y-m-d') }}</p>
                                 <p class="mt-2 text-xs text-yellow-500">Status: {{ $project->status }}</p>
 
                                 @if (Auth::user()->role === 'manager')
@@ -140,8 +141,10 @@
                                 <p class="mt-2 text-sm text-blue-600">Deskripsi: {{ $project->description }}</p>
                                 <p class="mt-2 text-sm text-blue-600">Anggaran:
                                     Rp.{{ number_format($project->anggaran, 2) }}</p>
-                                <p class="mt-2 text-sm text-blue-600">{{ $project->start_date }} -
-                                    {{ $project->end_date }}</p>
+                                <p class="mt-2 text-sm text-blue-600">
+                                    {{ \Carbon\Carbon::parse($project->start_date)->format('Y-m-d') }} -
+                                    {{ \Carbon\Carbon::parse($project->end_date)->format('Y-m-d') }}</p>
+                                </p>
                                 <p class="mt-2 text-xs text-blue-500">Status: {{ $project->status }}</p>
 
                                 @if (Auth::user()->role === 'manager')
@@ -198,6 +201,73 @@
                     </div>
                 </div>
 
+                <!-- Approval Request Section -->
+                <div id="in-progress-section" class="p-6 bg-white rounded-lg shadow">
+                    <h2 class="mb-4 text-lg font-semibold text-gray-700">Approval Request</h2>
+                    <div class="space-y-4">
+                        @forelse ($approvalRequestProjects as $project)
+                            <div class="relative p-4 bg-gray-100 rounded-lg shadow hover:bg-gray-200">
+                                <!-- Klik area ini akan membuka modal -->
+                                <div class="absolute inset-0 cursor-pointer"
+                                    onclick="openModal('{{ $project->id }}', '{{ $project->name }}', '{{ $project->description }}', '{{ number_format($project->anggaran, 2) }}')">
+                                </div>
+                                <!-- Konten Card -->
+                                <h3 class="font-semibold text-gray-700 text-md">{{ $project->name }}</h3>
+                                <p class="mt-2 text-sm text-gray-600">Deskripsi: {{ $project->description }}</p>
+                                <p class="mt-2 text-sm text-gray-600">Anggaran:
+                                    Rp.{{ number_format($project->anggaran, 2) }}</p>
+                                <p class="mt-2 text-sm text-gray-600">
+                                    {{ \Carbon\Carbon::parse($project->start_date)->format('Y-m-d') }} -
+                                    {{ \Carbon\Carbon::parse($project->end_date)->format('Y-m-d') }}</p>
+                                </p>
+                                <p class="mt-2 text-xs text-gray-500">Status: {{ $project->status }}</p>
+
+                                @if (Auth::user()->role === 'manager')
+                                    <!-- Tombol -->
+                                    <div class="relative z-10 flex justify-end mt-4 space-x-2">
+                                        <button type="button"
+                                            onclick="window.location='{{ route('projects.pdf', $project->id) }}'"
+                                            title="Export PDF"
+                                            class="flex items-center justify-center px-4 py-2 text-red-500 rounded-lg text-red hover:text-red-600">
+                                            <span class="material-symbols-outlined">picture_as_pdf</span>
+                                        </button>
+                                        <button type="button"
+                                            onclick="window.location='{{ route('proyekdetail.index', $project->id) }}'"
+                                            title="Detail Proyek" class="text-green-500 hover:text-green-700">
+                                            <i class="text-lg bi bi-info-circle"></i>
+                                        </button>
+                                        <form action="{{ route('proyek.undo', $project->id) }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="text-gray-500 hover:text-gray-700"
+                                                title="Move to In Progress">
+                                                <i class="text-lg bi bi-arrow-counterclockwise"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @else
+                                    <!-- Tombol -->
+                                    <div class="relative z-10 flex justify-end mt-4 space-x-2">
+
+                                        <a href="{{ route('proyekdetail.index', $project->id) }}"
+                                            class="text-green-500 hover:text-green-700">
+                                            <i class="text-lg bi bi-info-circle"></i>
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        @empty
+                            <p class="text-gray-500">Tidak ada proyek dengan status In Progress.</p>
+                        @endforelse
+                    </div>
+
+                    <!-- Pagination Links -->
+                    <div class="flex justify-center mt-6">
+                        {{ $inProgressProjects->links() }}
+                    </div>
+                </div>
+
                 <!-- Completed Section -->
                 <div id="completed-section" class="p-6 bg-white rounded-lg shadow">
                     <h2 class="mb-4 text-lg font-semibold text-gray-700">Completed</h2>
@@ -213,8 +283,10 @@
                                 <p class="mt-2 text-sm text-green-600">Deskripsi: {{ $project->description }}</p>
                                 <p class="mt-2 text-sm text-green-600">Anggaran:
                                     Rp.{{ number_format($project->anggaran, 2) }}</p>
-                                <p class="mt-2 text-sm text-green-600">{{ $project->start_date }} -
-                                    {{ $project->end_date }}</p>
+                                <p class="mt-2 text-sm text-green-600">
+                                    {{ \Carbon\Carbon::parse($project->start_date)->format('Y-m-d') }} -
+                                    {{ \Carbon\Carbon::parse($project->end_date)->format('Y-m-d') }}</p>
+                                </p>
                                 <p class="mt-2 text-xs text-green-500">Status: {{ $project->status }}</p>
 
                                 @if (Auth::user()->role === 'manager')
@@ -228,15 +300,6 @@
                                             class="text-green-500 hover:text-green-700">
                                             <i class="text-lg bi bi-info-circle"></i>
                                         </a>
-                                        <form action="{{ route('proyek.undo', $project->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit" class="text-gray-500 hover:text-gray-700"
-                                                title="Move to In Progress">
-                                                <i class="text-lg bi bi-arrow-counterclockwise"></i>
-                                            </button>
-                                        </form>
                                     </div>
                                 @else
                                     <!-- Tombol -->

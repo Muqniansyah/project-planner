@@ -1,5 +1,11 @@
 <x-app-layout>
 
+        <x-slot name="header">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+            Tabel User
+        </h2>
+    </x-slot>
+
     @if (session('success'))
         <div class="p-4 mb-4 text-green-700 bg-green-100 rounded">
             {{ session('success') }}
@@ -44,7 +50,7 @@
                                 <td class="px-4 py-2 text-gray-700">{{ $data->name }}</td>
                                 <td class="px-4 py-2 text-gray-700">{{ $data->email }}</td>
                                 <td class="px-4 py-2 text-gray-700">{{ $data->role }}</td>
-                                <td class="px-4 py-2 text-gray-700">{{ $data->jobdesk }}</td>
+                                <td class="px-4 py-2 text-gray-700">{{ optional($data->sumberDaya)->name }}</td>
                             </tr>
                         @endforeach
                     </tbody>

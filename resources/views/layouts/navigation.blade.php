@@ -36,7 +36,7 @@
                         <!-- Nav Admin -->
                         @if (Auth::user()->role == 'admin')
                             <a href="{{ route('admin.user.create') }}"
-                                class="px-3 py-2 text-sm font-medium {{ Request::is('user*') || Request::is('Laporan*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md">User</a>
+                                class="px-3 py-2 text-sm font-medium {{ Request::is('admin/user*') || Request::is('Laporan*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md">User</a>
                             <a href="{{ route('proyek.index') }}"
                                 class="px-3 py-2 text-sm font-medium {{ Request::is('proyek*') || Request::is('Laporan*') ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md">Project</a>
                             <a href="{{ route('ManajemenSD.index') }}"
@@ -80,27 +80,33 @@
                             </div>
                             <hr>
                             <!-- Notifications -->
-                            <div class="overflow-y-auto max-h-64 notifications">
-                                @if (isset(auth()->user()->unreadNotifications))
+                            <div class="overflow-y-auto bg-white rounded-lg shadow-md max-h-64 notifications">
+                                @if (!empty($notification->data['project_id']))
                                     @foreach (auth()->user()->unreadNotifications as $notification)
-                                        <div class="px-4 py-3 text-sm border-b hover:bg-gray-50 last:border-none">
+                                        <div class="px-6 py-4 text-sm border-b hover:bg-gray-100 last:border-none">
                                             <div>
-                                                <p class="text-gray-600">{{ $notification->data['message'] }}</p>
+                                                <p class="font-medium text-gray-800">
+                                                    {{ $notification->data['message'] }}</p>
                                             </div>
-                                            <div class="flex items-center justify-between mt-2">
+                                            <div class="flex items-center justify-between mt-3">
                                                 @if (!empty($notification->data['project_id']))
                                                     <a href="{{ url('/proyek/' . $notification->data['project_id']) }}"
-                                                        class="text-sm text-blue-500 hover:underline">Lihat detail</a>
-                                                    <button class="mark-read" data-id="{{ $notification->id }}">Mark as
-                                                        Read</button>
+                                                        class="text-sm font-semibold text-blue-600 hover:underline">Lihat
+                                                        detail</a>
+                                                    <button
+                                                        class="px-4 py-1 text-white transition duration-200 bg-blue-500 rounded mark-read hover:bg-blue-600"
+                                                        data-id="{{ $notification->id }}">
+                                                        Mark as Read
+                                                    </button>
                                                 @endif
                                             </div>
                                         </div>
                                     @endforeach
                                 @else
-                                    <p class="px-4 py-3 text-sm text-center text-gray-600">Tidak ada notifikasi</p>
+                                    <p class="px-6 py-4 text-sm text-center text-gray-500">Tidak ada notifikasi</p>
                                 @endif
                             </div>
+
                             <!-- Footer -->
                             <div class="px-4 py-2 bg-gray-100 border-t rounded-b-lg">
                                 <button
