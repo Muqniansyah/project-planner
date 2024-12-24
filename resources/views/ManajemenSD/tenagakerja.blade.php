@@ -88,6 +88,7 @@
                     <select id="sumber_daya_id" name="sumber_daya_id"
                         class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
                         required onchange="updateResourceInfo(); updateUserOptions()">
+                        <option value="">Pilih Job Desk</option>
                         @foreach ($tenaga_kerja as $resource)
                             @if ($resource->status === 'Available')
                                 <option value="{{ $resource->id }}" data-quantity="{{ $resource->quantity }}"

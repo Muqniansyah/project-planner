@@ -121,8 +121,7 @@
                         Kuantitas:
                     </label>
                     <input type="number" id="quantity" name="quantity" min="1"
-                        class="w-full p-2 bg-gray-100 border border-gray-300 rounded cursor-not-allowed focus:ring-0"
-                        disabled required>
+                        class="w-full p-2 bg-gray-100 border border-gray-300 rounded cursor-not-allowed focus:ring-0" required>
                 </div>
 
                 <!-- Jenis -->
@@ -217,15 +216,12 @@
         const selectedOption = sumberDayaDropdown.options[sumberDayaDropdown.selectedIndex];
 
         // Ambil data dari atribut data-quantity dan data-type
-        const quantity = selectedOption.getAttribute('data-quantity');
         const type = selectedOption.getAttribute('data-type');
 
         // Update nilai input
-        document.getElementById('quantity').value = quantity || '';
         document.getElementById('jenis').value = type || '';
 
         // Aktifkan atau tetap disabled
-        document.getElementById('quantity').disabled = true;
         document.getElementById('jenis').disabled = true;
     }
 </script>

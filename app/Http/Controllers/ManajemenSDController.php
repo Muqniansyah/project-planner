@@ -7,6 +7,7 @@ use App\Models\SumberDaya;
 use App\Models\Project;
 use App\Models\ProjectSumberDaya;
 use App\Models\User;
+use App\Notifications\UserAddedToProject;
 use Illuminate\Support\Facades\Auth;
 
 class ManajemenSDController extends Controller
@@ -119,23 +120,32 @@ class ManajemenSDController extends Controller
             return redirect()->back()->with('error', 'Sumber Daya tidak tersedia untuk dialokasikan.');
         }
 
-        // Alokasikan sumber daya ke proyek
-        $projectSumberDaya = ProjectSumberDaya::create([
-            'project_id' => $request->project_id,
-            'sumber_daya_id' => $resource->id,
-            'jenis' => $resource->type,
-        ]);
 
         // Jika ada user, buat relasi dengan user dan proyek
         if ($request->filled('user')) {
+            ProjectSumberDaya::create([
+                'project_id' => $request->project_id,
+                'sumber_daya_id' => $resource->id,
+                'jenis' => $resource->type,
+                'quantity' => 1,
+            ]);
+
             $user = User::findOrFail($request->user);
+            $project = Project::findOrFail($request->project_id);
 
             // Hubungkan user dengan proyek (many-to-many)
             $user->projects()->attach($request->project_id);
 
+            $user->notify(new UserAddedToProject($project, $user));
+
             $resource->update(['quantity' => $resource->quantity - 1]);
+
         } else {
+            
             ProjectSumberDaya::create([
+                'project_id' => $request->project_id,
+                'sumber_daya_id' => $resource->id,
+                'jenis' => $resource->type,
                 'quantity' => $request->quantity,
             ]);
 

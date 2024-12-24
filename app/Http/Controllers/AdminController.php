@@ -45,6 +45,7 @@ class AdminController extends Controller
         $sumberDaya = SumberDaya::find($request->jobdesk);
         $sumberDaya->update([
             'quantity' => $sumberDaya->quantity + 1,
+            'status' => 'Available',
         ]);
 
 

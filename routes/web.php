@@ -7,6 +7,7 @@ use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\PendjadwalanController;
 use App\Http\Controllers\ManajemenSDController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProjectDetailController;
 use App\Http\Controllers\SettingController;
 use App\Http\Middleware\AdminManagerMiddleware;
@@ -33,6 +34,8 @@ Route::get('/test-email', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [ProyekController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+
+    Route::post('/mark-notification-read', [NotificationController::class, 'markNotificationAsRead']);
 });
 
 

@@ -68,6 +68,8 @@
                                 {{ $notifications->count() }}
                             </span>
                         @endif
+
+
                     </button>
                     <div id="notification-menu"
                         class="absolute right-0 z-10 hidden w-64 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none">
@@ -78,22 +80,20 @@
                             </div>
                             <hr>
                             <!-- Notifications -->
-                            <div class="overflow-y-auto max-h-64">
-                                @if (isset($notifications) && $notifications->isNotEmpty())
-                                    @foreach ($notifications as $notification)
+                            <div class="overflow-y-auto max-h-64 notifications">
+                                @if (isset(auth()->user()->unreadNotifications))
+                                    @foreach (auth()->user()->unreadNotifications as $notification)
                                         <div class="px-4 py-3 text-sm border-b hover:bg-gray-50 last:border-none">
                                             <div>
-                                                <h4 class="font-semibold text-gray-800">
-                                                    {{ $notification->data['title'] }}</h4>
                                                 <p class="text-gray-600">{{ $notification->data['message'] }}</p>
                                             </div>
                                             <div class="flex items-center justify-between mt-2">
-                                                @if (!empty($notification->data['url']))
-                                                    <a href="{{ $notification->data['url'] }}"
+                                                @if (!empty($notification->data['project_id']))
+                                                    <a href="{{ url('/proyek/' . $notification->data['project_id']) }}"
                                                         class="text-sm text-blue-500 hover:underline">Lihat detail</a>
+                                                    <button class="mark-read" data-id="{{ $notification->id }}">Mark as
+                                                        Read</button>
                                                 @endif
-                                                <small
-                                                    class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</small>
                                             </div>
                                         </div>
                                     @endforeach
@@ -207,5 +207,26 @@
         if (!notificationMenu.contains(event.target) && !notificationMenuButton.contains(event.target)) {
             notificationMenu.classList.add('hidden');
         }
+    });
+
+    document.querySelectorAll('.mark-read').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const notificationId = button.getAttribute('data-id');
+            fetch(`/mark-notification-read`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        notification_id: notificationId
+                    })
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        button.closest('.notification').style.display =
+                            'none'; // Hide the notification
+                    }
+                });
+        });
     });
 </script>
