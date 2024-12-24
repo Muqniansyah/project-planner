@@ -121,7 +121,7 @@
                         Kuantitas:
                     </label>
                     <input type="number" id="quantity" name="quantity" min="1"
-                        class="w-full p-2 bg-gray-100 border border-gray-300 rounded cursor-not-allowed focus:ring-0" required>
+                        class="w-full p-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500" required>
                 </div>
 
                 <!-- Jenis -->
