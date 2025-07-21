@@ -113,16 +113,6 @@ class ProyekController extends Controller
                 })
                 ->paginate(2, ['*'], 'inProgressPage');
 
-            $approvalRequestProjects = Project::where('status', 'Approval Request')
-                ->where('manager', Auth::user()->id)
-                ->where(function ($query) use ($search) {
-                    if ($search) {
-                        $query->where('name', 'like', '%' . $search . '%')
-                            ->orWhere('description', 'like', '%' . $search . '%');
-                    }
-                })
-                ->paginate(2, ['*'], 'inProgressPage');
-
             $completedProjects = Project::where('status', 'Completed')
                 ->where('manager', Auth::user()->id)
                 ->where(function ($query) use ($search) {
@@ -139,7 +129,6 @@ class ProyekController extends Controller
             'pendingProjects',
             'inProgressProjects',
             'completedProjects',
-            'approvalRequestProjects'
         ));
     }
 
@@ -153,8 +142,6 @@ class ProyekController extends Controller
         if ($project->status === 'Pending') {
             $project->status = 'In Progress';
         } elseif ($project->status === 'In Progress') {
-            $project->status = "Approval Request";
-        } elseif ($project->status === 'Approval Request') {
             $project->status = 'Completed';
 
             // Kembalikan sumber daya jenis "tenaga kerja" yang digunakan menjadi tersedia
