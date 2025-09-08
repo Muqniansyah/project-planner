@@ -1,0 +1,28 @@
+DOKUMENTASI
+
+-project planner ini clientnya kai.
+-fitur penting ganchart dan kurva s untuk melihat titik kritis nya. dasar dari kurva s dari ganchart.
+-perlu menmdaftar semua pekerjaan atau aktivitas apassaja. dan menentukan predesesor, jadi kita melakukan pendjadwalan menggunakan ganchart.
+-predesesor = jika satu tugas selesai kita harus menentukkan memulai yang mana lagi. 
+
+a) untuk proyek
+-anggaran harus desimal
+-pilih sumber daya
+-pilih quantty
+ 
+b) untuk laporan
+-untuk laporan tambahkan startdate dan end date
+
+untuk pengaturan sistem
+-nama pengguna itu data load jangan inputan yaitu dropdown tapi tak bisa diedit
+dan dibikin checkbox untuk hak akses.
+-untuk notifikasi, parameternya notifikasi dan prameter valuenya dibikin checkbox isinya migguan dan daily atau bulanan.
+
+# referensi
+- toster js untuk notification
+- chartjs untuk kurbva s
+
+flow =
+membuat project -> mengatur pendjawalkan berdasarkan projek -> membuat laporan.
+
+php artisan migrate:fresh untuk melakukan migrasi ulang
